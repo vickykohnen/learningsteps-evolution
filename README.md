@@ -70,7 +70,7 @@ You should see the postgres service running.
 
 ### 5. Run the API
 
-Make sure you are in the root of your project in the terminal:
+Make sure you are in the root of your project in the terminal (inside VS Code, while container is running):
 
    ```bash
      ./start.sh
