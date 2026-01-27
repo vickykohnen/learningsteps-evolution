@@ -4,4 +4,9 @@ metadata:
   name: learningsteps-config
 data:
   APP_ENV: "production"
-  DATABASE_URL: "postgresql://user@db-host:5432/learningsteps-db-server"
+  # DATABASE_URL: "postgresql://user@db-host:5432/learningsteps-db-server"
+  # Break the URL down into components
+  DB_USER: "psqladmin"
+  DB_NAME: "postgres"
+  # Use actual Azure Database Server name here:
+  DB_HOST: "kv-learningsteps-1769-db-server.postgres.database.azure.com"

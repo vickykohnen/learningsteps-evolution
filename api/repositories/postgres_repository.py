@@ -10,7 +10,33 @@ from repositories.interface_repository import DatabaseInterface
 
 load_dotenv()
 
-DATABASE_URL = os.getenv("DATABASE_URL")
+def get_database_url():
+    # 1. Path where Kubernetes/CSI mounts the secret file
+    password_file_path = "/mnt/secrets-store/pg-admin-password"
+    
+    # 2. Check if the file exists (This is true only in AKS)
+    if os.path.exists(password_file_path):
+        with open(password_file_path, "r") as f:
+            db_password = f.read().strip()
+        
+        # Pull the host/user/db name from your ConfigMap/Env vars
+        user = os.getenv("DB_USER", "psqladmin")
+        host = os.getenv("DB_HOST")
+        db_name = os.getenv("DB_NAME", "postgres")
+        
+        return f"postgresql://{user}:{db_password}@{host}:5432/{db_name}"
+
+    # 3. Fallback for your Mac (Local Development)
+    url = os.getenv("DATABASE_URL")
+    if not url:
+        raise ValueError("DATABASE_URL or CSI password file is missing")
+    return url
+
+# Set the URL for the rest of the script to use
+DATABASE_URL = get_database_url()
+
+# DATABASE_URL = os.getenv("DATABASE_URL")
+
 if not DATABASE_URL:
     raise ValueError("DATABASE_URL environment variable is missing")
 
