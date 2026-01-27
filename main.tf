@@ -254,6 +254,11 @@ resource "kubernetes_deployment" "api" {
           image = "learningstepsregistry20260126.azurecr.io/learningsteps-api:v1"
 
           env {
+            name = "PYTHONUNBUFFERED"
+            value = "1"
+          }
+
+          env {
             name  = "DB_HOST"
             value = azurerm_postgresql_flexible_server.db.fqdn
           }

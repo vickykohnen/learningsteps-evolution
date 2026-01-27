@@ -16,7 +16,7 @@ app = FastAPI()
 @app.exception_handler(RequestValidationError)
 async def validation_exception_handler(request: Request, exc: RequestValidationError):
     # This will print the exact error to your 'kubectl logs'
-    print(f"DEBUG: Validation Error: {exc.errors()}")
+    print(f"DEBUG: Validation Error: {exc.errors()}, flush=True")
     return JSONResponse(
         status_code=400,
         content={"detail": exc.errors()}
