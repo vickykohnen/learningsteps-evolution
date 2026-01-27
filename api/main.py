@@ -3,6 +3,23 @@ from dotenv import load_dotenv
 from routers.journal_router import router as journal_router
 import logging
 
+
+# add code for debugging
+
+from fastapi import Request
+from fastapi.exceptions import RequestValidationError
+from fastapi.responses import JSONResponse
+
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request: Request, exc: RequestValidationError):
+    # This will print the exact error to your 'kubectl logs'
+    print(f"DEBUG: Validation Error: {exc.errors()}")
+    print(f"DEBUG: Body received: {await request.body()}")
+    return JSONResponse(
+        status_code=400,
+        content={"detail": exc.errors(), "body": str(await request.body())},
+    )
+
 load_dotenv()
 
 # Configure basic console logging
