@@ -1,5 +1,6 @@
 import json
 import os
+from urllib.parse import quote_plus
 import uuid
 import asyncpg
 from datetime import datetime, timezone
@@ -26,7 +27,12 @@ def get_database_url():
             raise ValueError("DB_HOST env var is missing")
         db_name = os.getenv("DB_NAME", "postgres").strip()
         
-        return f"postgresql://{user}:{db_password}@{host}:5432/{db_name}"
+        # URL encode the user and password to handle '@' and special characters
+        safe_user = quote_plus(user)
+        safe_password = quote_plus(db_password)
+        
+        # Build the URL using the safe versions
+        return f"postgresql://{safe_user}:{safe_password}@{host}:5432/{db_name}"
 
     # 3. Fallback for your Mac (Local Development)
     url = os.getenv("DATABASE_URL")
