@@ -24,6 +24,7 @@ jobs:
           password: ${{ secrets.ACR_PASSWORD }}
 
       - name: Build Docker image
+        working-directory: ./api
         run: docker build -t ${{ secrets.ACR_LOGIN_SERVER }}/learningsteps-api:v1 -t ${{ secrets.ACR_LOGIN_SERVER }}/learningsteps-api:v1-${{ github.sha }} .
 
       - name: Run Trivy vulnerability scanner
