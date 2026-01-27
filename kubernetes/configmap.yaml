@@ -10,3 +10,4 @@ data:
   DB_NAME: "postgres"
   # Use actual Azure Database Server name here:
   DB_HOST: "kv-learningsteps-1769-db-server.postgres.database.azure.com"
+  DB_PORT: "5432"       # PostgreSQL default port

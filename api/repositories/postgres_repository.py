@@ -20,9 +20,11 @@ def get_database_url():
             db_password = f.read().strip()
         
         # Pull the host/user/db name from your ConfigMap/Env vars
-        user = os.getenv("DB_USER", "psqladmin")
-        host = os.getenv("DB_HOST")
-        db_name = os.getenv("DB_NAME", "postgres")
+        user = os.getenv("DB_USER", "psqladmin").strip()
+        host = os.getenv("DB_HOST").strip()
+        if not host:
+            raise ValueError("DB_HOST env var is missing")
+        db_name = os.getenv("DB_NAME", "postgres").strip()
         
         return f"postgresql://{user}:{db_password}@{host}:5432/{db_name}"
 
