@@ -75,3 +75,30 @@ jobs:
           echo "Pipeline Integrity Verified - Security Scan Passed"
           docker push "${{ secrets.ACR_LOGIN_SERVER }}/learningsteps-api:v1"
           docker push "${{ secrets.ACR_LOGIN_SERVER }}/learningsteps-api:v1-${{ github.sha }}"
+    
+deploy-to-aks:
+    needs: verify-integrity
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Set AKS Context
+        uses: azure/aks-set-context@v4
+        with:
+          resource-group: "learningstepsRG"
+          cluster-name: "learningsteps-aks"
+
+      - name: Update AKS Deployment
+        run: |
+          # 1. Update the deployment to use the specific SHA tag we just pushed
+          kubectl set image deployment/learningsteps-api learningsteps-api-container="${{ secrets.ACR_LOGIN_SERVER }}/learningsteps-api:v1-${{ github.sha }}" --namespace=default
+          
+          # 2. Monitor the rollout to ensure it doesn't fail (e.g., ImagePullBackOff)
+          kubectl rollout status deployment/learningsteps-api --namespace=default          
+          

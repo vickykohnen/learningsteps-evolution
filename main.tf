@@ -94,6 +94,14 @@ resource "azurerm_key_vault" "kv" {
   }
 }
 
+resource "azurerm_key_vault_access_policy" "aks_policy" {
+  key_vault_id = azurerm_key_vault.kv.id
+  tenant_id    = data.azurerm_client_config.current.tenant_id
+  object_id    = azurerm_kubernetes_cluster.aks.kubelet_identity[0].object_id
+
+  secret_permissions = ["Get", "List"]
+}
+
 resource "random_password" "db_pass" {
   length  = 20
   special = true

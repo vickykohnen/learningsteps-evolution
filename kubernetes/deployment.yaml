@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: learningsteps-api
+spec:
+  replicas: 2 # High Availability: always have at least 2 pods running
+  selector:
+    matchLabels:
+      app: learningsteps
+  template:
+    metadata:
+      labels:
+        app: learningsteps
+    spec:
+      containers:
+      - name: api
+        image: learningstepsregistry20260126.azurecr.io/learningsteps-api:v1
+        ports:
+        - containerPort: 8000
+        envFrom:
+        - configMapRef:
+            name: learningsteps-config
+    # This is to make the database password avaiable to the API
+    # Need to mount the Key Vault via the CSI driver and involves
+    # adding a Volume (source) and a VolumeMount (destination inside 
+    # the container)
+        volumeMounts:
+        - name: secrets-store-inline
+          mountPath: "/mnt/secrets-store"
+          readOnly: true
+      volumes:
+        - name: secrets-store-inline
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: "azure-kv-secrets" # Must match metadata.name

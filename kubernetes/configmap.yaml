@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: learningsteps-config
+data:
+  APP_ENV: "production"
+  DATABASE_URL: "postgresql://user@db-host:5432/learningsteps-db-server"
