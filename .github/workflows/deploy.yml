@@ -103,4 +103,11 @@ jobs:
           kubectl set image deployment/learningsteps-api api="${{ secrets.ACR_LOGIN_SERVER }}/learningsteps-api:v1-${{ github.sha }}"
           
           # 3. Monitor the rollout to ensure it doesn't fail (e.g., ImagePullBackOff)
-          kubectl rollout status deployment/learningsteps-api         
+          kubectl rollout status deployment/learningsteps-api
+
+      - name: Debug AKS rollout on failure
+        if: failure()
+        run: |
+          kubectl get pods -o wide
+          kubectl describe deployment learningsteps-api
+          kubectl describe pods -l app=learningsteps-api
