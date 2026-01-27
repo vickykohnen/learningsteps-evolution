@@ -15,6 +15,13 @@ spec:
       containers:
       - name: api
         image: learningstepsregistry20260126.azurecr.io/learningsteps-api:v1
+        env: 
+        - name: DB_HOST
+          value: "kv-learningsteps-1769-db-server.postgres.database.azure.com" # This is the magic link
+        - name: DB_USER
+          value: "vicky@kv-learningsteps-1769-db-server"
+        - name: DB_NAME
+          value: "postgres"              
         ports:
         - containerPort: 8000
         envFrom:
