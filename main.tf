@@ -201,21 +201,32 @@ resource "kubernetes_deployment" "api" {
           name  = "init-db-user"
           image = "postgres:13"
 
-          command = [
-            "bash",
-            "-c",
-            <<EOT
-PGPASSWORD=${azurerm_key_vault_secret.db_password.value} psql \
-  -h ${azurerm_postgresql_flexible_server.db.fqdn} \
-  -U psqladmin \
-  -d fastapidb \
-  -c "DO \$\$ BEGIN IF NOT EXISTS (SELECT FROM pg_catalog.pg_roles WHERE rolname = 'fastapiuser') THEN CREATE USER fastapiuser WITH PASSWORD '${random_password.db_pass.result}'; GRANT ALL PRIVILEGES ON DATABASE fastapidb TO fastapiuser; END IF; END \$\$;"
-EOT
+          # This command runs the script mounted from the ConfigMap
+          command = ["/bin/bash", "-c"]
+          args = [
+            "PGPASSWORD=$DB_PASSWORD psql -h $DB_HOST -U $DB_USER -d $DB_NAME -f /scripts/init.sql"
           ]
 
           env {
-            name  = "PGPASSWORD"
+            name  = "DB_HOST"
+            value = azurerm_postgresql_flexible_server.db.fqdn
+          }
+          env {
+            name  = "DB_USER"
+            value = "psqladmin"
+          }
+          env {
+            name  = "DB_NAME"
+            value = "fastapidb"
+          }
+          env {
+            name  = "DB_PASSWORD"
             value = azurerm_key_vault_secret.db_password.value
+          }
+
+          volume_mount {
+            name       = "db-init-volume"
+            mount_path = "/scripts"
           }
         }
 
@@ -248,6 +259,15 @@ EOT
           }
         }
 
+        # Volume for the SQL Script ConfigMap
+        volume {
+          name = "db-init-volume"
+          config_map {
+            name = kubernetes_config_map.db_init_script.metadata[0].name
+          }
+        }
+
+        # Volumne for Key Vault Secrets
         volume {
           name = "secrets-store-inline"
           csi {
@@ -260,5 +280,23 @@ EOT
         }
       }
     }
+  }
+}
+
+# 11 DB Init Script
+resource "kubernetes_config_map" "db_init_script" {
+  metadata {
+    name = "db-init-script"
+  }
+
+  data = {
+    "init.sql" = <<EOF
+      CREATE TABLE IF NOT EXISTS entries (
+          id SERIAL PRIMARY KEY,
+          title TEXT NOT NULL,
+          content TEXT,
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+    EOF
   }
 }
