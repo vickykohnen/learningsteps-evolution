@@ -25,9 +25,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build \
-            -t ${{ secrets.ACR_LOGIN_SERVER }}/learningsteps-api:v1 \
-            -t ${{ secrets.ACR_LOGIN_SERVER }}/learningsteps-api:v1-${{ github.sha }} .
+          docker build -t ${{ secrets.ACR_LOGIN_SERVER }}/learningsteps-api:v1 -t ${{ secrets.ACR_LOGIN_SERVER }}/learningsteps-api:v1-${{ github.sha }} .
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
