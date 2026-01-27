@@ -24,8 +24,7 @@ jobs:
           password: ${{ secrets.ACR_PASSWORD }}
 
       - name: Build Docker image
-        run: |
-          docker build -t ${{ secrets.ACR_LOGIN_SERVER }}/learningsteps-api:v1 -t ${{ secrets.ACR_LOGIN_SERVER }}/learningsteps-api:v1-${{ github.sha }} .
+        run: docker build -t ${{ secrets.ACR_LOGIN_SERVER }}/learningsteps-api:v1 -t ${{ secrets.ACR_LOGIN_SERVER }}/learningsteps-api:v1-${{ github.sha }} .
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
@@ -42,5 +41,5 @@ jobs:
         if: success()
         run: |
           echo "Pipeline Integrity Verified - Security Scan Passed"
-          docker push ${{ secrets.ACR_LOGIN_SERVER }}/learningsteps-api:v1
-          docker push ${{ secrets.ACR_LOGIN_SERVER }}/learningsteps-api:v1-${{ github.sha }}
+          docker push "${{ secrets.ACR_LOGIN_SERVER }}/learningsteps-api:v1"
+          docker push "${{ secrets.ACR_LOGIN_SERVER }}/learningsteps-api:v1-${{ github.sha }}"
