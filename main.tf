@@ -204,7 +204,25 @@ resource "kubernetes_deployment" "api" {
           # This command runs the script mounted from the ConfigMap
           command = ["/bin/bash", "-c"]
           args = [
-            "PGPASSWORD=$DB_PASSWORD psql -h $DB_HOST -U $DB_USER -d $DB_NAME -f /scripts/init.sql"
+            <<-EOT
+            PGPASSWORD=$DB_PASSWORD psql -h $DB_HOST -U $DB_USER -d $DB_NAME -c "
+            DO \$\$ 
+            BEGIN 
+              -- 1. Create the application user if it doesn't exist
+              IF NOT EXISTS (SELECT FROM pg_catalog.pg_roles WHERE rolname = 'fastapiuser') THEN
+                CREATE USER fastapiuser WITH PASSWORD 'pass123';
+              END IF;
+              
+              -- 2. Grant Permissions
+              GRANT ALL PRIVILEGES ON DATABASE fastapidb TO fastapiuser;
+              GRANT USAGE ON SCHEMA public TO fastapiuser;
+              GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO fastapiuser;
+              GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO fastapiuser;
+            END \$\$;
+            "
+            # 3. Run your table creation script from the ConfigMap
+            PGPASSWORD=$DB_PASSWORD psql -h $DB_HOST -U $DB_USER -d $DB_NAME -f /scripts/init.sql
+            EOT
           ]
 
           env {
