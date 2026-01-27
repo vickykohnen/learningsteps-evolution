@@ -169,3 +169,11 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# terraform files
+.terraform/
+*.tfstate
+*.tfstate.backup
+bin/
+obj/
+node_modules/
