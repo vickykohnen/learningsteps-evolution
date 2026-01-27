@@ -12,6 +12,38 @@ from repositories.interface_repository import DatabaseInterface
 load_dotenv()
 
 def get_database_url():
+    password_file_path = "/mnt/secrets-store/pg-admin-password"
+
+    if os.path.exists(password_file_path):
+        with open(password_file_path, "r") as f:
+            db_password = f.read().strip()
+
+        # Read DB info from env vars
+        user = os.getenv("DB_USER")
+        if not user:
+            raise ValueError("DB_USER env var is missing")
+
+        host = os.getenv("DB_HOST")
+        if not host:
+            raise ValueError("DB_HOST env var is missing")
+
+        db_name = os.getenv("DB_NAME")
+        if not db_name:
+            raise ValueError("DB_NAME env var is missing")
+
+        # URL encode user and password
+        safe_user = quote_plus(user)
+        safe_password = quote_plus(db_password)
+
+        return f"postgresql://{safe_user}:{safe_password}@{host}:5432/{db_name}"
+
+    # Fallback for local dev
+    url = os.getenv("DATABASE_URL")
+    if not url:
+        raise ValueError("DATABASE_URL or CSI password file is missing")
+    return url
+
+def get_database_url_old():
     # 1. Path where Kubernetes/CSI mounts the secret file
     password_file_path = "/mnt/secrets-store/pg-admin-password"
     

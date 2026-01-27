@@ -164,7 +164,20 @@ resource "azurerm_postgresql_flexible_server" "db" {
   depends_on = [azurerm_private_dns_zone_virtual_network_link.dns_link]
 }
 
-# 8. Kubernetes Deployment
+# 8. Create the database in the Flexible Server
+resource "azurerm_postgresql_flexible_server_database" "app_db" {
+  name      = "fastapidb"
+  server_id = azurerm_postgresql_flexible_server.db.id
+  charset   = "UTF8"
+  # Optional: collation
+  # collation = "English_United States.1252"
+
+  depends_on = [
+    azurerm_postgresql_flexible_server.db
+  ]
+}
+
+# 9. Kubernetes Deployment
 resource "kubernetes_deployment" "api" {
   metadata {
     name = "learningsteps-api"
@@ -183,6 +196,30 @@ resource "kubernetes_deployment" "api" {
         }
       }
       spec {
+        # INIT Container: ensure the app user exists
+        init_container {
+          name  = "init-db-user"
+          image = "postgres:13"
+
+          command = [
+            "bash",
+            "-c",
+            <<EOT
+PGPASSWORD=${azurerm_key_vault_secret.db_password.value} psql \
+  -h ${azurerm_postgresql_flexible_server.db.fqdn} \
+  -U psqladmin \
+  -d fastapidb \
+  -c "DO \$\$ BEGIN IF NOT EXISTS (SELECT FROM pg_catalog.pg_roles WHERE rolname = 'fastapiuser') THEN CREATE USER fastapiuser WITH PASSWORD '${random_password.db_pass.result}'; GRANT ALL PRIVILEGES ON DATABASE fastapidb TO fastapiuser; END IF; END \$\$;"
+EOT
+          ]
+
+          env {
+            name  = "PGPASSWORD"
+            value = azurerm_key_vault_secret.db_password.value
+          }
+        }
+
+        # MAIN FastAPI Container
         container {
           name  = "api"
           image = "learningstepsregistry20260126.azurecr.io/learningsteps-api:v1"
