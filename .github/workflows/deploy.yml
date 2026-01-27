@@ -58,11 +58,19 @@ jobs:
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
 
-      - name: Log Status and Push Image
-        if: success()
+      - name: Secret Check
+        run: |
+          if [ -z "${{ secrets.ACR_LOGIN_SERVER }}" ]; then
+            echo "ERROR: Secret ACR_LOGIN_SERVER is EMPTY"
+            exit 1
+          else
+            echo "Secret is found and has a length of ${#ACR_VAL} characters."
+          fi
         env:
-          # This forces the secret into a standard environment variable
-          ACR_SERVER: ${{ secrets.ACR_LOGIN_SERVER }}        
+          ACR_VAL: ${{ secrets.ACR_LOGIN_SERVER }}
+
+      - name: Log Status and Push Image
+        if: success()       
         run: |
           echo "Pipeline Integrity Verified - Security Scan Passed"
           docker push "${{ secrets.ACR_LOGIN_SERVER }}/learningsteps-api:v1"
