@@ -1,4 +1,4 @@
-import logging
+# import logging
 from typing import AsyncGenerator
 from fastapi import APIRouter, HTTPException, Request, Depends
 from repositories.postgres_repository import PostgresDB
