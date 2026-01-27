@@ -5,11 +5,22 @@ terraform {
       source  = "hashicorp/azurerm"
       version = "~> 3.0"
     }
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = "~> 2.0"
+    }
   }
 }
 
 provider "azurerm" {
   features {}
+}
+
+provider "kubernetes" {
+  host                   = azurerm_kubernetes_cluster.aks.kube_config.0.host
+  client_certificate     = base64decode(azurerm_kubernetes_cluster.aks.kube_config.0.client_certificate)
+  client_key             = base64decode(azurerm_kubernetes_cluster.aks.kube_config.0.client_key)
+  cluster_ca_certificate = base64decode(azurerm_kubernetes_cluster.aks.kube_config.0.cluster_ca_certificate)
 }
 
 # Fetches your current Azure login details (Tenant, Subscription, etc.)
@@ -151,4 +162,66 @@ resource "azurerm_postgresql_flexible_server" "db" {
   
   # Ensure DNS link is ready BEFORE creating the DB
   depends_on = [azurerm_private_dns_zone_virtual_network_link.dns_link]
+}
+
+# 8. Kubernetes Deployment
+resource "kubernetes_deployment" "api" {
+  metadata {
+    name = "learningsteps-api"
+  }
+  spec {
+    replicas = 2
+    selector {
+      match_labels = {
+        app = "learningsteps"
+      }
+    }
+    template {
+      metadata {
+        labels = {
+          app = "learningsteps"
+        }
+      }
+      spec {
+        container {
+          name  = "api"
+          image = "learningstepsregistry20260126.azurecr.io/learningsteps-api:v1"
+
+          env {
+            name  = "DB_HOST"
+            value = azurerm_postgresql_flexible_server.db.fqdn
+          }
+          env {
+            name  = "DB_USER"
+            value = "psqladmin" # Flexible server doesn't use the @server suffix!
+          }
+          env {
+            name  = "DB_NAME"
+            value = "postgres"
+          }
+
+          port {
+            container_port = 8000
+          }
+
+          volume_mount {
+            name       = "secrets-store-inline"
+            mount_path = "/mnt/secrets-store"
+            read_only  = true
+          }
+        }
+
+        volume {
+          name = "secrets-store-inline"
+          csi {
+            driver    = "secrets-store.csi.k8s.io"
+            read_only = true
+            volume_attributes = {
+              "secretProviderClass" = "azure-kv-secrets"
+            }
+          }
+        }
+      }
+    }
+  }
 }
