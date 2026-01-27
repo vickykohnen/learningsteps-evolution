@@ -16,6 +16,18 @@ jobs:
       - name: Checkout Repository Code
         uses: actions/checkout@v4
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Ruff
+        run: pip install ruff
+
+      - name: Run Ruff Linter
+        # This will fail the build if it finds errors in the api folder
+        run: ruff check api/        
+
       - name: Run Checkov
         uses: bridgecrewio/checkov-action@master
         with:
@@ -51,6 +63,9 @@ jobs:
 
       - name: Log Status and Push Image
         if: success()
+        env:
+          # This forces the secret into a standard environment variable
+          ACR_SERVER: ${{ secrets.ACR_LOGIN_SERVER }}        
         run: |
           echo "Pipeline Integrity Verified - Security Scan Passed"
           docker push "${{ secrets.ACR_LOGIN_SERVER }}/learningsteps-api:v1"
