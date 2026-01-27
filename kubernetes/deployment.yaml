@@ -20,10 +20,10 @@ spec:
         envFrom:
         - configMapRef:
             name: learningsteps-config
-    # This is to make the database password avaiable to the API
-    # Need to mount the Key Vault via the CSI driver and involves
-    # adding a Volume (source) and a VolumeMount (destination inside 
-    # the container)
+        # This is to make the database password avaiable to the API
+        # Need to mount the Key Vault via the CSI driver and involves
+        # adding a Volume (source) and a VolumeMount (destination inside 
+        # the container)
         volumeMounts:
         - name: secrets-store-inline
           mountPath: "/mnt/secrets-store"

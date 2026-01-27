@@ -76,7 +76,7 @@ jobs:
           docker push "${{ secrets.ACR_LOGIN_SERVER }}/learningsteps-api:v1"
           docker push "${{ secrets.ACR_LOGIN_SERVER }}/learningsteps-api:v1-${{ github.sha }}"
     
-deploy-to-aks:
+  deploy-to-aks:
     needs: verify-integrity
     runs-on: ubuntu-latest
     steps:
@@ -96,9 +96,12 @@ deploy-to-aks:
 
       - name: Update AKS Deployment
         run: |
-          # 1. Update the deployment to use the specific SHA tag we just pushed
-          kubectl set image deployment/learningsteps-api learningsteps-api-container="${{ secrets.ACR_LOGIN_SERVER }}/learningsteps-api:v1-${{ github.sha }}" --namespace=default
+          # 1. Apply the SecretProviderClass and updated Deployment first
+          kubectl apply -f kubernetes/secret-provider-class.yaml
+          kubectl apply -f kubernetes/deployment.yaml        
+          
+          # 2. Update the image to the latest version built in the pipeline
+          kubectl set image deployment/learningsteps-api api="${{ secrets.ACR_LOGIN_SERVER }}/learningsteps-api:v1-${{ github.sha }}"
           
           # 2. Monitor the rollout to ensure it doesn't fail (e.g., ImagePullBackOff)
-          kubectl rollout status deployment/learningsteps-api --namespace=default          
-          
+          kubectl rollout status deployment/learningsteps-api         
