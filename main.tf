@@ -27,19 +27,10 @@ provider "kubernetes" {
 data "azurerm_client_config" "current" {}
 
 # 2. SHARED INFRASTRUCTURE
-
 resource "azurerm_resource_group" "aks_rg" {
   name     = "learningstepsRG"
   location = "northeurope"
 }
-
-# resource "azurerm_container_registry" "acr" {
-#  name                = "learningstepsregistry20260126"
-#  resource_group_name = azurerm_resource_group.aks_rg.name
-#  location            = azurerm_resource_group.aks_rg.location
-#  sku                 = "Standard"
-#  admin_enabled       = false   # generally recommended to keep it disabled
-# }
 
 resource "azurerm_virtual_network" "vnet" {
   name                = "learningsteps-vnet"
@@ -98,7 +89,6 @@ resource "azurerm_kubernetes_cluster" "aks" {
   key_vault_secrets_provider {
     secret_rotation_enabled = true
   }
-
 }
 
 # 5. SECURITY (Key Vault & Permissions)

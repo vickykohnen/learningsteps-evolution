@@ -1,1 +1,0 @@
-subscription_id = "a2c41e5d-454d-4c0b-9f7a-2260d54011e7"
