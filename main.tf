@@ -86,9 +86,9 @@ resource "azurerm_kubernetes_cluster" "aks" {
   }
 
   network_profile {
-    network_plugin     = "azure"
-    service_cidr       = "10.100.0.0/16" # Non-overlapping range
-    dns_service_ip     = "10.100.0.10"   # Must be within the service_cidr range
+    network_plugin = "azure"
+    service_cidr   = "10.100.0.0/16" # Non-overlapping range
+    dns_service_ip = "10.100.0.10"   # Must be within the service_cidr range
   }
 
   identity {
@@ -114,8 +114,8 @@ resource "azurerm_key_vault" "kv" {
 # Personal Access Policy - Allows YOU (the person running Terraform) to add secrets
 resource "azurerm_key_vault_access_policy" "user_policy" {
   key_vault_id = azurerm_key_vault.kv.id
-  tenant_id = data.azurerm_client_config.current.tenant_id
-  object_id = data.azurerm_client_config.current.object_id
+  tenant_id    = data.azurerm_client_config.current.tenant_id
+  object_id    = data.azurerm_client_config.current.object_id
 
   secret_permissions = ["Get", "List", "Set", "Delete", "Purge"]
 }
@@ -155,19 +155,19 @@ resource "azurerm_private_dns_zone_virtual_network_link" "dns_link" {
 
 # 7. DATA (PostgreSQL Flexible Server)
 resource "azurerm_postgresql_flexible_server" "db" {
-  name                   = "learningsteps-db-server"
-  resource_group_name    = azurerm_resource_group.aks_rg.name
-  location               = azurerm_resource_group.aks_rg.location
-  zone                   = "1"
-  version                = "13"
-  delegated_subnet_id    = azurerm_subnet.db_subnet.id
-  private_dns_zone_id    = azurerm_private_dns_zone.dns.id
-  administrator_login    = "psqladmin"
-  administrator_password = azurerm_key_vault_secret.db_password.value
-  storage_mb             = 32768
-  sku_name               = "GP_Standard_D2ds_v4"
+  name                          = "learningsteps-db-server"
+  resource_group_name           = azurerm_resource_group.aks_rg.name
+  location                      = azurerm_resource_group.aks_rg.location
+  zone                          = "1"
+  version                       = "13"
+  delegated_subnet_id           = azurerm_subnet.db_subnet.id
+  private_dns_zone_id           = azurerm_private_dns_zone.dns.id
+  administrator_login           = "psqladmin"
+  administrator_password        = azurerm_key_vault_secret.db_password.value
+  storage_mb                    = 32768
+  sku_name                      = "GP_Standard_D2ds_v4"
   public_network_access_enabled = false
-  
+
   # Ensure DNS link is ready BEFORE creating the DB
   depends_on = [azurerm_private_dns_zone_virtual_network_link.dns_link]
 }
@@ -262,7 +262,7 @@ resource "kubernetes_deployment" "api" {
           image = "learningstepsregistry20260126.azurecr.io/learningsteps-api:v1"
 
           env {
-            name = "PYTHONUNBUFFERED"
+            name  = "PYTHONUNBUFFERED"
             value = "1"
           }
 
