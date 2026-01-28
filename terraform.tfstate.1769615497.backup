@@ -1,0 +1,810 @@
+{
+  "version": 4,
+  "terraform_version": "1.14.3",
+  "serial": 109,
+  "lineage": "3469b075-8cf2-078c-c7cd-ddb1488ec2ae",
+  "outputs": {},
+  "resources": [
+    {
+      "mode": "data",
+      "type": "azurerm_client_config",
+      "name": "current",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "client_id": "04b07795-8ddb-461a-bbee-02f9e1bf7b46",
+            "id": "Y2xpZW50Q29uZmlncy9jbGllbnRJZD0wNGIwNzc5NS04ZGRiLTQ2MWEtYmJlZS0wMmY5ZTFiZjdiNDY7b2JqZWN0SWQ9YjAwY2Q4ZmItM2JlOS00YzRiLWFlMTUtMzVjMjJkN2JjY2FiO3N1YnNjcmlwdGlvbklkPWEyYzQxZTVkLTQ1NGQtNGMwYi05ZjdhLTIyNjBkNTQwMTFlNzt0ZW5hbnRJZD1jMDUzMTQ4NC01MGZhLTRmZjItOTdkZi1iMWYyZDQ4MTA2MDM=",
+            "object_id": "b00cd8fb-3be9-4c4b-ae15-35c22d7bccab",
+            "subscription_id": "a2c41e5d-454d-4c0b-9f7a-2260d54011e7",
+            "tenant_id": "c0531484-50fa-4ff2-97df-b1f2d4810603",
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "azurerm_key_vault",
+      "name": "kv",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 2,
+          "attributes": {
+            "access_policy": [
+              {
+                "application_id": "",
+                "certificate_permissions": [],
+                "key_permissions": [
+                  "Get",
+                  "List",
+                  "Create",
+                  "Delete",
+                  "Update",
+                  "Purge",
+                  "Recover",
+                  "GetRotationPolicy",
+                  "SetRotationPolicy"
+                ],
+                "object_id": "b00cd8fb-3be9-4c4b-ae15-35c22d7bccab",
+                "secret_permissions": [
+                  "Get",
+                  "List",
+                  "Set",
+                  "Delete",
+                  "Purge"
+                ],
+                "storage_permissions": [],
+                "tenant_id": "c0531484-50fa-4ff2-97df-b1f2d4810603"
+              }
+            ],
+            "contact": [],
+            "enable_rbac_authorization": false,
+            "enabled_for_deployment": false,
+            "enabled_for_disk_encryption": false,
+            "enabled_for_template_deployment": false,
+            "id": "/subscriptions/a2c41e5d-454d-4c0b-9f7a-2260d54011e7/resourceGroups/learningstepsRG/providers/Microsoft.KeyVault/vaults/kv-learningsteps-1769",
+            "location": "northeurope",
+            "name": "kv-learningsteps-1769",
+            "network_acls": [
+              {
+                "bypass": "AzureServices",
+                "default_action": "Allow",
+                "ip_rules": [],
+                "virtual_network_subnet_ids": []
+              }
+            ],
+            "public_network_access_enabled": true,
+            "purge_protection_enabled": true,
+            "resource_group_name": "learningstepsRG",
+            "sku_name": "standard",
+            "soft_delete_retention_days": 7,
+            "tags": {},
+            "tenant_id": "c0531484-50fa-4ff2-97df-b1f2d4810603",
+            "timeouts": null,
+            "vault_uri": "https://kv-learningsteps-1769.vault.azure.net/"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAwLCJkZWxldGUiOjE4MDAwMDAwMDAwMDAsInJlYWQiOjMwMDAwMDAwMDAwMCwidXBkYXRlIjoxODAwMDAwMDAwMDAwfSwic2NoZW1hX3ZlcnNpb24iOiIyIn0=",
+          "dependencies": [
+            "azurerm_resource_group.aks_rg",
+            "data.azurerm_client_config.current"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "azurerm_key_vault_access_policy",
+      "name": "user_policy",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "application_id": "",
+            "certificate_permissions": [],
+            "id": "/subscriptions/a2c41e5d-454d-4c0b-9f7a-2260d54011e7/resourceGroups/learningstepsRG/providers/Microsoft.KeyVault/vaults/kv-learningsteps-1769/objectId/b00cd8fb-3be9-4c4b-ae15-35c22d7bccab",
+            "key_permissions": [
+              "Get",
+              "List",
+              "Create",
+              "Delete",
+              "Update",
+              "Purge",
+              "Recover"
+            ],
+            "key_vault_id": "/subscriptions/a2c41e5d-454d-4c0b-9f7a-2260d54011e7/resourceGroups/learningstepsRG/providers/Microsoft.KeyVault/vaults/kv-learningsteps-1769",
+            "object_id": "b00cd8fb-3be9-4c4b-ae15-35c22d7bccab",
+            "secret_permissions": [
+              "Get",
+              "List",
+              "Set",
+              "Delete",
+              "Purge"
+            ],
+            "storage_permissions": [],
+            "tenant_id": "c0531484-50fa-4ff2-97df-b1f2d4810603",
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAwLCJkZWxldGUiOjE4MDAwMDAwMDAwMDAsInJlYWQiOjMwMDAwMDAwMDAwMCwidXBkYXRlIjoxODAwMDAwMDAwMDAwfX0=",
+          "dependencies": [
+            "azurerm_key_vault.kv",
+            "azurerm_resource_group.aks_rg",
+            "data.azurerm_client_config.current"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "azurerm_key_vault_key",
+      "name": "des",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "status": "tainted",
+          "schema_version": 0,
+          "attributes": {
+            "curve": "",
+            "e": "AQAB",
+            "expiration_date": null,
+            "id": "https://kv-learningsteps-1769.vault.azure.net/keys/aks-disk-encryption-key/00c0ae763d044cafa44cc97c6754966e",
+            "key_opts": [
+              "decrypt",
+              "encrypt",
+              "sign",
+              "unwrapKey",
+              "wrapKey",
+              "verify"
+            ],
+            "key_size": 2048,
+            "key_type": "RSA",
+            "key_vault_id": "/subscriptions/a2c41e5d-454d-4c0b-9f7a-2260d54011e7/resourceGroups/learningstepsRG/providers/Microsoft.KeyVault/vaults/kv-learningsteps-1769",
+            "n": "wR1FEXhcWWGw8ckJhYetQU7GIYPT6bWsQtk6wvamHS6X4_zRpvfpoOmjCJFouFW-Twyb1gqtD1ZGtwIIQDVuLTXUGRDdpsvunJx3uIw5bvLcnp8735euuGgrZZG8XMbVC7f3-PNiOeYesYMv0DihImWLuf8fDcH2gBDiQx05vW0ek1pquGpMpM9yHkAMkQkTMH9bCbnQHYgzN8zEnHlwDyct5A4KDprQZ39Y43gzu_E9Rhc7RzCRVymsD54FRoAvY6XkA3W_OWGDLNm5Waof97pi-5xYQdp6S5TEo0OgfUjopbOl2r3EtIIjBCN59E0LGttHNvWxwu_peD7nU5bliQ",
+            "name": "aks-disk-encryption-key",
+            "not_before_date": null,
+            "public_key_openssh": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDBHUUReFxZYbDxyQmFh61BTsYhg9PptaxC2TrC9qYdLpfj/NGm9+mg6aMIkWi4Vb5PDJvWCq0PVka3AghANW4tNdQZEN2my+6cnHe4jDlu8tyenzvfl664aCtlkbxcxtULt/f482I55h6xgy/QOKEiZYu5/x8NwfaAEOJDHTm9bR6TWmq4akykz3IeQAyRCRMwf1sJudAdiDM3zMSceXAPJy3kDgoOmtBnf1jjeDO78T1GFztHMJFXKawPngVGgC9jpeQDdb85YYMs2blZqh/3umL7nFhB2npLlMSjQ6B9SOils6XavcS0giMEI3n0TQsa20c29bHC7+l4PudTluWJ\n",
+            "public_key_pem": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwR1FEXhcWWGw8ckJhYet\nQU7GIYPT6bWsQtk6wvamHS6X4/zRpvfpoOmjCJFouFW+Twyb1gqtD1ZGtwIIQDVu\nLTXUGRDdpsvunJx3uIw5bvLcnp8735euuGgrZZG8XMbVC7f3+PNiOeYesYMv0Dih\nImWLuf8fDcH2gBDiQx05vW0ek1pquGpMpM9yHkAMkQkTMH9bCbnQHYgzN8zEnHlw\nDyct5A4KDprQZ39Y43gzu/E9Rhc7RzCRVymsD54FRoAvY6XkA3W/OWGDLNm5Waof\n97pi+5xYQdp6S5TEo0OgfUjopbOl2r3EtIIjBCN59E0LGttHNvWxwu/peD7nU5bl\niQIDAQAB\n-----END PUBLIC KEY-----\n",
+            "resource_id": "/subscriptions/a2c41e5d-454d-4c0b-9f7a-2260d54011e7/resourceGroups/learningstepsRG/providers/Microsoft.KeyVault/vaults/kv-learningsteps-1769/keys/aks-disk-encryption-key/versions/00c0ae763d044cafa44cc97c6754966e",
+            "resource_versionless_id": "/subscriptions/a2c41e5d-454d-4c0b-9f7a-2260d54011e7/resourceGroups/learningstepsRG/providers/Microsoft.KeyVault/vaults/kv-learningsteps-1769/keys/aks-disk-encryption-key",
+            "rotation_policy": [],
+            "tags": null,
+            "timeouts": null,
+            "version": "00c0ae763d044cafa44cc97c6754966e",
+            "versionless_id": "https://kv-learningsteps-1769.vault.azure.net/keys/aks-disk-encryption-key",
+            "x": "",
+            "y": ""
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAwLCJkZWxldGUiOjE4MDAwMDAwMDAwMDAsInJlYWQiOjE4MDAwMDAwMDAwMDAsInVwZGF0ZSI6MTgwMDAwMDAwMDAwMH19",
+          "dependencies": [
+            "azurerm_key_vault.kv",
+            "azurerm_key_vault_access_policy.user_policy",
+            "azurerm_resource_group.aks_rg",
+            "data.azurerm_client_config.current"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "azurerm_key_vault_secret",
+      "name": "db_password",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "content_type": "postgres-admin-password",
+            "expiration_date": "2027-01-01T00:00:00Z",
+            "id": "https://kv-learningsteps-1769.vault.azure.net/secrets/pg-admin-password/9260742b4bf74819b935340161621f62",
+            "key_vault_id": "/subscriptions/a2c41e5d-454d-4c0b-9f7a-2260d54011e7/resourceGroups/learningstepsRG/providers/Microsoft.KeyVault/vaults/kv-learningsteps-1769",
+            "name": "pg-admin-password",
+            "not_before_date": null,
+            "resource_id": "/subscriptions/a2c41e5d-454d-4c0b-9f7a-2260d54011e7/resourceGroups/learningstepsRG/providers/Microsoft.KeyVault/vaults/kv-learningsteps-1769/secrets/pg-admin-password/versions/9260742b4bf74819b935340161621f62",
+            "resource_versionless_id": "/subscriptions/a2c41e5d-454d-4c0b-9f7a-2260d54011e7/resourceGroups/learningstepsRG/providers/Microsoft.KeyVault/vaults/kv-learningsteps-1769/secrets/pg-admin-password",
+            "tags": {},
+            "timeouts": null,
+            "value": "%{q-X\u003ew}IqF9iQa]2kU\u003c",
+            "version": "9260742b4bf74819b935340161621f62",
+            "versionless_id": "https://kv-learningsteps-1769.vault.azure.net/secrets/pg-admin-password"
+          },
+          "sensitive_attributes": [
+            [
+              {
+                "type": "get_attr",
+                "value": "value"
+              }
+            ]
+          ],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAwLCJkZWxldGUiOjE4MDAwMDAwMDAwMDAsInJlYWQiOjE4MDAwMDAwMDAwMDAsInVwZGF0ZSI6MTgwMDAwMDAwMDAwMH19",
+          "dependencies": [
+            "azurerm_key_vault.kv",
+            "azurerm_resource_group.aks_rg",
+            "data.azurerm_client_config.current",
+            "random_password.db_pass"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "azurerm_log_analytics_workspace",
+      "name": "law",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 3,
+          "attributes": {
+            "allow_resource_only_permissions": true,
+            "cmk_for_query_forced": false,
+            "daily_quota_gb": -1,
+            "data_collection_rule_id": "",
+            "id": "/subscriptions/a2c41e5d-454d-4c0b-9f7a-2260d54011e7/resourceGroups/learningstepsRG/providers/Microsoft.OperationalInsights/workspaces/aks-law",
+            "identity": [],
+            "immediate_data_purge_on_30_days_enabled": false,
+            "internet_ingestion_enabled": true,
+            "internet_query_enabled": true,
+            "local_authentication_disabled": false,
+            "location": "northeurope",
+            "name": "aks-law",
+            "primary_shared_key": "ljgzpfhPOpkSg3mRUmPjuH8h7vyDZF24xtP/LRifTwY0tLto5tAZfT9tWZbHTfCE8mWRF9GxjqXaQwQ0nV/X7A==",
+            "reservation_capacity_in_gb_per_day": null,
+            "resource_group_name": "learningstepsRG",
+            "retention_in_days": 30,
+            "secondary_shared_key": "lh4tXSgPEmq20H94as/hp5Z8UATqhatTE9SofWK0XS1VfXiL7lTj/DiWHxS9jqUvF7B9hCtr9w+LUHpkezpD/w==",
+            "sku": "PerGB2018",
+            "tags": {},
+            "timeouts": null,
+            "workspace_id": "416555ac-7e55-48b7-9691-6d5f50f9a111"
+          },
+          "sensitive_attributes": [
+            [
+              {
+                "type": "get_attr",
+                "value": "primary_shared_key"
+              }
+            ],
+            [
+              {
+                "type": "get_attr",
+                "value": "secondary_shared_key"
+              }
+            ]
+          ],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAwLCJkZWxldGUiOjE4MDAwMDAwMDAwMDAsInJlYWQiOjMwMDAwMDAwMDAwMCwidXBkYXRlIjoxODAwMDAwMDAwMDAwfSwic2NoZW1hX3ZlcnNpb24iOiIzIn0=",
+          "dependencies": [
+            "azurerm_resource_group.aks_rg"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "azurerm_network_security_group",
+      "name": "aks_nsg",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "/subscriptions/a2c41e5d-454d-4c0b-9f7a-2260d54011e7/resourceGroups/learningstepsRG/providers/Microsoft.Network/networkSecurityGroups/aks-nsg",
+            "location": "northeurope",
+            "name": "aks-nsg",
+            "resource_group_name": "learningstepsRG",
+            "security_rule": [],
+            "tags": {},
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAwLCJkZWxldGUiOjE4MDAwMDAwMDAwMDAsInJlYWQiOjMwMDAwMDAwMDAwMCwidXBkYXRlIjoxODAwMDAwMDAwMDAwfX0=",
+          "dependencies": [
+            "azurerm_resource_group.aks_rg"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "azurerm_postgresql_flexible_server",
+      "name": "db",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "administrator_login": "psqladmin",
+            "administrator_password": "%{q-X\u003ew}IqF9iQa]2kU\u003c",
+            "authentication": [
+              {
+                "active_directory_auth_enabled": false,
+                "password_auth_enabled": true,
+                "tenant_id": ""
+              }
+            ],
+            "auto_grow_enabled": false,
+            "backup_retention_days": 7,
+            "create_mode": null,
+            "customer_managed_key": [],
+            "delegated_subnet_id": "/subscriptions/a2c41e5d-454d-4c0b-9f7a-2260d54011e7/resourceGroups/learningstepsRG/providers/Microsoft.Network/virtualNetworks/learningsteps-vnet/subnets/db-subnet",
+            "fqdn": "learningsteps-db-server.postgres.database.azure.com",
+            "geo_redundant_backup_enabled": true,
+            "high_availability": [],
+            "id": "/subscriptions/a2c41e5d-454d-4c0b-9f7a-2260d54011e7/resourceGroups/learningstepsRG/providers/Microsoft.DBforPostgreSQL/flexibleServers/learningsteps-db-server",
+            "identity": [],
+            "location": "northeurope",
+            "maintenance_window": [],
+            "name": "learningsteps-db-server",
+            "point_in_time_restore_time_in_utc": null,
+            "private_dns_zone_id": "/subscriptions/a2c41e5d-454d-4c0b-9f7a-2260d54011e7/resourceGroups/learningstepsRG/providers/Microsoft.Network/privateDnsZones/learningsteps.postgres.database.azure.com",
+            "public_network_access_enabled": false,
+            "replication_role": "",
+            "resource_group_name": "learningstepsRG",
+            "sku_name": "GP_Standard_D2ds_v4",
+            "source_server_id": null,
+            "storage_mb": 32768,
+            "storage_tier": "P4",
+            "tags": {},
+            "timeouts": null,
+            "version": "13",
+            "zone": "1"
+          },
+          "sensitive_attributes": [
+            [
+              {
+                "type": "get_attr",
+                "value": "administrator_password"
+              }
+            ]
+          ],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjozNjAwMDAwMDAwMDAwLCJkZWxldGUiOjM2MDAwMDAwMDAwMDAsInJlYWQiOjMwMDAwMDAwMDAwMCwidXBkYXRlIjozNjAwMDAwMDAwMDAwfX0=",
+          "dependencies": [
+            "azurerm_key_vault.kv",
+            "azurerm_key_vault_secret.db_password",
+            "azurerm_private_dns_zone.dns",
+            "azurerm_private_dns_zone_virtual_network_link.dns_link",
+            "azurerm_resource_group.aks_rg",
+            "azurerm_subnet.db_subnet",
+            "azurerm_virtual_network.vnet",
+            "data.azurerm_client_config.current",
+            "random_password.db_pass"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "azurerm_postgresql_flexible_server_database",
+      "name": "app_db",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "charset": "UTF8",
+            "collation": "en_US.utf8",
+            "id": "/subscriptions/a2c41e5d-454d-4c0b-9f7a-2260d54011e7/resourceGroups/learningstepsRG/providers/Microsoft.DBforPostgreSQL/flexibleServers/learningsteps-db-server/databases/fastapidb",
+            "name": "fastapidb",
+            "server_id": "/subscriptions/a2c41e5d-454d-4c0b-9f7a-2260d54011e7/resourceGroups/learningstepsRG/providers/Microsoft.DBforPostgreSQL/flexibleServers/learningsteps-db-server",
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAwLCJkZWxldGUiOjE4MDAwMDAwMDAwMDAsInJlYWQiOjMwMDAwMDAwMDAwMH19",
+          "dependencies": [
+            "azurerm_key_vault.kv",
+            "azurerm_key_vault_secret.db_password",
+            "azurerm_postgresql_flexible_server.db",
+            "azurerm_private_dns_zone.dns",
+            "azurerm_private_dns_zone_virtual_network_link.dns_link",
+            "azurerm_resource_group.aks_rg",
+            "azurerm_subnet.db_subnet",
+            "azurerm_virtual_network.vnet",
+            "data.azurerm_client_config.current",
+            "random_password.db_pass"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "azurerm_private_dns_zone",
+      "name": "dns",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "/subscriptions/a2c41e5d-454d-4c0b-9f7a-2260d54011e7/resourceGroups/learningstepsRG/providers/Microsoft.Network/privateDnsZones/learningsteps.postgres.database.azure.com",
+            "max_number_of_record_sets": 25000,
+            "max_number_of_virtual_network_links": 1000,
+            "max_number_of_virtual_network_links_with_registration": 100,
+            "name": "learningsteps.postgres.database.azure.com",
+            "number_of_record_sets": 2,
+            "resource_group_name": "learningstepsRG",
+            "soa_record": [
+              {
+                "email": "azureprivatedns-host.microsoft.com",
+                "expire_time": 2419200,
+                "fqdn": "learningsteps.postgres.database.azure.com.",
+                "host_name": "azureprivatedns.net",
+                "minimum_ttl": 10,
+                "refresh_time": 3600,
+                "retry_time": 300,
+                "serial_number": 1,
+                "tags": {},
+                "ttl": 3600
+              }
+            ],
+            "tags": {},
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAwLCJkZWxldGUiOjE4MDAwMDAwMDAwMDAsInJlYWQiOjMwMDAwMDAwMDAwMCwidXBkYXRlIjoxODAwMDAwMDAwMDAwfX0=",
+          "dependencies": [
+            "azurerm_resource_group.aks_rg"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "azurerm_private_dns_zone_virtual_network_link",
+      "name": "dns_link",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "/subscriptions/a2c41e5d-454d-4c0b-9f7a-2260d54011e7/resourceGroups/learningstepsRG/providers/Microsoft.Network/privateDnsZones/learningsteps.postgres.database.azure.com/virtualNetworkLinks/db-dns-link",
+            "name": "db-dns-link",
+            "private_dns_zone_name": "learningsteps.postgres.database.azure.com",
+            "registration_enabled": false,
+            "resource_group_name": "learningstepsRG",
+            "tags": {},
+            "timeouts": null,
+            "virtual_network_id": "/subscriptions/a2c41e5d-454d-4c0b-9f7a-2260d54011e7/resourceGroups/learningstepsRG/providers/Microsoft.Network/virtualNetworks/learningsteps-vnet"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAwLCJkZWxldGUiOjE4MDAwMDAwMDAwMDAsInJlYWQiOjMwMDAwMDAwMDAwMCwidXBkYXRlIjoxODAwMDAwMDAwMDAwfX0=",
+          "dependencies": [
+            "azurerm_private_dns_zone.dns",
+            "azurerm_resource_group.aks_rg",
+            "azurerm_virtual_network.vnet"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "azurerm_private_endpoint",
+      "name": "kv",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "custom_dns_configs": [
+              {
+                "fqdn": "kv-learningsteps-1769.vault.azure.net",
+                "ip_addresses": [
+                  "10.0.1.10"
+                ]
+              }
+            ],
+            "custom_network_interface_name": "",
+            "id": "/subscriptions/a2c41e5d-454d-4c0b-9f7a-2260d54011e7/resourceGroups/learningstepsRG/providers/Microsoft.Network/privateEndpoints/kv-pe",
+            "ip_configuration": [],
+            "location": "northeurope",
+            "name": "kv-pe",
+            "network_interface": [
+              {
+                "id": "/subscriptions/a2c41e5d-454d-4c0b-9f7a-2260d54011e7/resourceGroups/learningstepsRG/providers/Microsoft.Network/networkInterfaces/kv-pe.nic.95ca549e-2104-48c8-845a-d52e896d7b17",
+                "name": "kv-pe.nic.95ca549e-2104-48c8-845a-d52e896d7b17"
+              }
+            ],
+            "private_dns_zone_configs": [],
+            "private_dns_zone_group": [],
+            "private_service_connection": [
+              {
+                "is_manual_connection": false,
+                "name": "kv-psc",
+                "private_connection_resource_alias": "",
+                "private_connection_resource_id": "/subscriptions/a2c41e5d-454d-4c0b-9f7a-2260d54011e7/resourceGroups/learningstepsRG/providers/Microsoft.KeyVault/vaults/kv-learningsteps-1769",
+                "private_ip_address": "10.0.1.10",
+                "request_message": "",
+                "subresource_names": [
+                  "vault"
+                ]
+              }
+            ],
+            "resource_group_name": "learningstepsRG",
+            "subnet_id": "/subscriptions/a2c41e5d-454d-4c0b-9f7a-2260d54011e7/resourceGroups/learningstepsRG/providers/Microsoft.Network/virtualNetworks/learningsteps-vnet/subnets/aks-subnet",
+            "tags": {},
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjozNjAwMDAwMDAwMDAwLCJkZWxldGUiOjM2MDAwMDAwMDAwMDAsInJlYWQiOjMwMDAwMDAwMDAwMCwidXBkYXRlIjozNjAwMDAwMDAwMDAwfX0=",
+          "dependencies": [
+            "azurerm_key_vault.kv",
+            "azurerm_resource_group.aks_rg",
+            "azurerm_subnet.aks_subnet",
+            "azurerm_virtual_network.vnet",
+            "data.azurerm_client_config.current"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "azurerm_resource_group",
+      "name": "aks_rg",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "/subscriptions/a2c41e5d-454d-4c0b-9f7a-2260d54011e7/resourceGroups/learningstepsRG",
+            "location": "northeurope",
+            "managed_by": "",
+            "name": "learningstepsRG",
+            "tags": {},
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo1NDAwMDAwMDAwMDAwLCJkZWxldGUiOjU0MDAwMDAwMDAwMDAsInJlYWQiOjMwMDAwMDAwMDAwMCwidXBkYXRlIjo1NDAwMDAwMDAwMDAwfSwic2NoZW1hX3ZlcnNpb24iOiIwIn0="
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "azurerm_subnet",
+      "name": "aks_subnet",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "address_prefixes": [
+              "10.0.1.0/24"
+            ],
+            "default_outbound_access_enabled": true,
+            "delegation": [],
+            "enforce_private_link_endpoint_network_policies": false,
+            "enforce_private_link_service_network_policies": false,
+            "id": "/subscriptions/a2c41e5d-454d-4c0b-9f7a-2260d54011e7/resourceGroups/learningstepsRG/providers/Microsoft.Network/virtualNetworks/learningsteps-vnet/subnets/aks-subnet",
+            "name": "aks-subnet",
+            "private_endpoint_network_policies": "Enabled",
+            "private_endpoint_network_policies_enabled": true,
+            "private_link_service_network_policies_enabled": true,
+            "resource_group_name": "learningstepsRG",
+            "service_endpoint_policy_ids": [],
+            "service_endpoints": [],
+            "timeouts": null,
+            "virtual_network_name": "learningsteps-vnet"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAwLCJkZWxldGUiOjE4MDAwMDAwMDAwMDAsInJlYWQiOjMwMDAwMDAwMDAwMCwidXBkYXRlIjoxODAwMDAwMDAwMDAwfX0=",
+          "dependencies": [
+            "azurerm_resource_group.aks_rg",
+            "azurerm_virtual_network.vnet"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "azurerm_subnet",
+      "name": "db_subnet",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "address_prefixes": [
+              "10.0.2.0/24"
+            ],
+            "default_outbound_access_enabled": true,
+            "delegation": [
+              {
+                "name": "fs",
+                "service_delegation": [
+                  {
+                    "actions": [
+                      "Microsoft.Network/virtualNetworks/subnets/join/action"
+                    ],
+                    "name": "Microsoft.DBforPostgreSQL/flexibleServers"
+                  }
+                ]
+              }
+            ],
+            "enforce_private_link_endpoint_network_policies": false,
+            "enforce_private_link_service_network_policies": false,
+            "id": "/subscriptions/a2c41e5d-454d-4c0b-9f7a-2260d54011e7/resourceGroups/learningstepsRG/providers/Microsoft.Network/virtualNetworks/learningsteps-vnet/subnets/db-subnet",
+            "name": "db-subnet",
+            "private_endpoint_network_policies": "Enabled",
+            "private_endpoint_network_policies_enabled": true,
+            "private_link_service_network_policies_enabled": true,
+            "resource_group_name": "learningstepsRG",
+            "service_endpoint_policy_ids": [],
+            "service_endpoints": [
+              "Microsoft.Storage"
+            ],
+            "timeouts": null,
+            "virtual_network_name": "learningsteps-vnet"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAwLCJkZWxldGUiOjE4MDAwMDAwMDAwMDAsInJlYWQiOjMwMDAwMDAwMDAwMCwidXBkYXRlIjoxODAwMDAwMDAwMDAwfX0=",
+          "dependencies": [
+            "azurerm_resource_group.aks_rg",
+            "azurerm_virtual_network.vnet"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "azurerm_subnet_network_security_group_association",
+      "name": "aks",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "/subscriptions/a2c41e5d-454d-4c0b-9f7a-2260d54011e7/resourceGroups/learningstepsRG/providers/Microsoft.Network/virtualNetworks/learningsteps-vnet/subnets/aks-subnet",
+            "network_security_group_id": "/subscriptions/a2c41e5d-454d-4c0b-9f7a-2260d54011e7/resourceGroups/learningstepsRG/providers/Microsoft.Network/networkSecurityGroups/aks-nsg",
+            "subnet_id": "/subscriptions/a2c41e5d-454d-4c0b-9f7a-2260d54011e7/resourceGroups/learningstepsRG/providers/Microsoft.Network/virtualNetworks/learningsteps-vnet/subnets/aks-subnet",
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAwLCJkZWxldGUiOjE4MDAwMDAwMDAwMDAsInJlYWQiOjMwMDAwMDAwMDAwMH19",
+          "dependencies": [
+            "azurerm_network_security_group.aks_nsg",
+            "azurerm_resource_group.aks_rg",
+            "azurerm_subnet.aks_subnet",
+            "azurerm_virtual_network.vnet"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "azurerm_subnet_network_security_group_association",
+      "name": "db",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "/subscriptions/a2c41e5d-454d-4c0b-9f7a-2260d54011e7/resourceGroups/learningstepsRG/providers/Microsoft.Network/virtualNetworks/learningsteps-vnet/subnets/db-subnet",
+            "network_security_group_id": "/subscriptions/a2c41e5d-454d-4c0b-9f7a-2260d54011e7/resourceGroups/learningstepsRG/providers/Microsoft.Network/networkSecurityGroups/aks-nsg",
+            "subnet_id": "/subscriptions/a2c41e5d-454d-4c0b-9f7a-2260d54011e7/resourceGroups/learningstepsRG/providers/Microsoft.Network/virtualNetworks/learningsteps-vnet/subnets/db-subnet",
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAwLCJkZWxldGUiOjE4MDAwMDAwMDAwMDAsInJlYWQiOjMwMDAwMDAwMDAwMH19",
+          "dependencies": [
+            "azurerm_network_security_group.aks_nsg",
+            "azurerm_resource_group.aks_rg",
+            "azurerm_subnet.db_subnet",
+            "azurerm_virtual_network.vnet"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "azurerm_virtual_network",
+      "name": "vnet",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "address_space": [
+              "10.0.0.0/16"
+            ],
+            "bgp_community": "",
+            "ddos_protection_plan": [],
+            "dns_servers": [],
+            "edge_zone": "",
+            "encryption": [],
+            "flow_timeout_in_minutes": 0,
+            "guid": "84426c22-62fe-4a60-b19f-4de3f9297273",
+            "id": "/subscriptions/a2c41e5d-454d-4c0b-9f7a-2260d54011e7/resourceGroups/learningstepsRG/providers/Microsoft.Network/virtualNetworks/learningsteps-vnet",
+            "location": "northeurope",
+            "name": "learningsteps-vnet",
+            "resource_group_name": "learningstepsRG",
+            "subnet": [
+              {
+                "address_prefix": "10.0.1.0/24",
+                "id": "/subscriptions/a2c41e5d-454d-4c0b-9f7a-2260d54011e7/resourceGroups/learningstepsRG/providers/Microsoft.Network/virtualNetworks/learningsteps-vnet/subnets/aks-subnet",
+                "name": "aks-subnet",
+                "security_group": "/subscriptions/a2c41e5d-454d-4c0b-9f7a-2260d54011e7/resourceGroups/learningstepsRG/providers/Microsoft.Network/networkSecurityGroups/aks-nsg"
+              },
+              {
+                "address_prefix": "10.0.2.0/24",
+                "id": "/subscriptions/a2c41e5d-454d-4c0b-9f7a-2260d54011e7/resourceGroups/learningstepsRG/providers/Microsoft.Network/virtualNetworks/learningsteps-vnet/subnets/db-subnet",
+                "name": "db-subnet",
+                "security_group": "/subscriptions/a2c41e5d-454d-4c0b-9f7a-2260d54011e7/resourceGroups/learningstepsRG/providers/Microsoft.Network/networkSecurityGroups/aks-nsg"
+              }
+            ],
+            "tags": {},
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAwLCJkZWxldGUiOjE4MDAwMDAwMDAwMDAsInJlYWQiOjMwMDAwMDAwMDAwMCwidXBkYXRlIjoxODAwMDAwMDAwMDAwfX0=",
+          "dependencies": [
+            "azurerm_resource_group.aks_rg"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "random_password",
+      "name": "db_pass",
+      "provider": "provider[\"registry.terraform.io/hashicorp/random\"]",
+      "instances": [
+        {
+          "schema_version": 3,
+          "attributes": {
+            "bcrypt_hash": "$2a$10$in7W8t42MQAhkiL1/cTOSOAFThnMFni5YCQDKJ27CTpKE5/01uqFu",
+            "id": "none",
+            "keepers": null,
+            "length": 20,
+            "lower": true,
+            "min_lower": 0,
+            "min_numeric": 0,
+            "min_special": 0,
+            "min_upper": 0,
+            "number": true,
+            "numeric": true,
+            "override_special": null,
+            "result": "%{q-X\u003ew}IqF9iQa]2kU\u003c",
+            "special": true,
+            "upper": true
+          },
+          "sensitive_attributes": [
+            [
+              {
+                "type": "get_attr",
+                "value": "bcrypt_hash"
+              }
+            ],
+            [
+              {
+                "type": "get_attr",
+                "value": "result"
+              }
+            ]
+          ],
+          "identity_schema_version": 0
+        }
+      ]
+    }
+  ],
+  "check_results": null
+}

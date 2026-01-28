@@ -59,6 +59,6 @@ logger = logging.getLogger(__name__)
 logger.info("LearningSteps API started successfully")
 
 # 6. Start Prometheus Metrics Server
-metrics_port = int(os.environ.get("METRICS_PORT", 8000))
+metrics_port = int(os.environ.get("METRICS_PORT", 8001))
 start_http_server(metrics_port)
 print(f"Prometheus metrics available on port {metrics_port}")

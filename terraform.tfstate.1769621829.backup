@@ -1,37 +1,9 @@
 {
   "version": 4,
   "terraform_version": "1.14.3",
-  "serial": 163,
+  "serial": 147,
   "lineage": "3469b075-8cf2-078c-c7cd-ddb1488ec2ae",
-  "outputs": {
-    "kube_config": {
-      "value": {
-        "client_certificate": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUZIVENDQXdXZ0F3SUJBZ0lRQ09JTWNTRUhNdE43Z084Tks0eHdRekFOQmdrcWhraUc5dzBCQVFzRkFEQU4KTVFzd0NRWURWUVFERXdKallUQWVGdzB5TmpBeE1qZ3hOak15TURSYUZ3MHlPREF4TWpneE5qUXlNRFJhTURBeApGekFWQmdOVkJBb1REbk41YzNSbGJUcHRZWE4wWlhKek1SVXdFd1lEVlFRREV3eHRZWE4wWlhKamJHbGxiblF3CmdnSWlNQTBHQ1NxR1NJYjNEUUVCQVFVQUE0SUNEd0F3Z2dJS0FvSUNBUUN3THltZU5WRFordHM5UXR0UDVyZnUKN2c2NE5oQ01vNGFjVGU1Ujd5NXFRbmw3OHk3NDRxRWhocHlIKzk0ZlBwV1RzWEtWbkJUeHhCcjlJYi9pVE5GVgo1SjZlL1VkQUcrM1Axc1VoaHJOSHBwd3lnRVFoSWlWcWNOM1V0VTRRMUtPc01DL3h5dE5HS2xLY0hnWHRqQzczCnRCSi9FY1F0V2JLNTYvbzZOUUpZdk0veCsxdmhWRW8yam9PdnptT3YzR25UOTF2L3VnMlNBQTN6V0pULzd0aEsKNDZKOFROcnlSNEVGR0NDSXpQTmxYSG9ZWC9rdXN6V3FvaVlJMEdVdVRqNnlQMVlYcVhBd3RhaXduejRBaG1qVAoyWEpSZll5UjkrRXc2YjVwOHRWY1B5U2Y0cVB1YUFxU3ZzcTdDbmJkZVhuYXhrMTBwZER1WmhlTkNJUnFDRHVlCnhudjdhZjZKZU1oak9MSmF1d0dXZFpOekRKT0hTQlhmTDBGUy9rK3h0ZnREb1p0Qy80SlFoN3gvcjkvWXFjS0MKRXFIekdPa1g0MXRiWGNxaU9aRWdwSVRDcnA0Z0dwV2g4TEsyTGdIZzFLbzFwc1FxWkZGUmFWRjF1a3RSQVM3dQphK2pnOHhQZ1ZaNFgzc3dHV0k1c29mSWhYcHpBa05sZHpaQS8xaHJYZHRjVWt6ek5FK3JVNktGbmNWTlcwMjF1CkFZY09MajZiNk5lOHpYNTE2THVRUjBKK1UwTXBqeFNLTTlVMGZLc29tRFh6eFd0bW1CYWpCR3h4ZEM0bU1JaHkKNUpFRkRBcGtEc1BIWnUvVndEYjJCVjFqZ0JJaTlSSE1DeVFXSFNHbWo2NDZ4ZDhpZ3lIQmlVL2cvdy9Fb21HNApwcGNMdEVEdWVudnEyenBQbmV0Q1JRSURBUUFCbzFZd1ZEQU9CZ05WSFE4QkFmOEVCQU1DQmFBd0V3WURWUjBsCkJBd3dDZ1lJS3dZQkJRVUhBd0l3REFZRFZSMFRBUUgvQkFJd0FEQWZCZ05WSFNNRUdEQVdnQlJRQW8vcmQxVnAKdTRydW12UjZmR3FQK1pkaUl6QU5CZ2txaGtpRzl3MEJBUXNGQUFPQ0FnRUFLclJBTVZ2aFdJNEJlVU93dTJpagorTkVoZ0ZFQjFJdVVQMmFKcnhnTUIrN2NTdXZGVTF4d1ZCQ1FuRGlmckR5QWRWWUM3RnRHTlQwUHBTK1hHSFQwCmhhS054R0NvRUVkMWtSVU4rakN1VHl2dXc5UUVvakNHUnNyUkJEY3I2V0tYeFhCZEdHblVtVURPQkp5UHczMjQKOGQ4NitqanBNQWFqVGE0aXhPbVJpdDREMktHYllTSHlGVURRa0YzNmN0cVdNWXMzSW50VzJEZ3dQSlRZSVdqWApBL3VIOXl3MkRpRU0zSm9ZR3pmQ1BRUkpPWDFBeng2Wm5zRkduZ1hlS3d2N0xuajFmQzJ4VVVaYm5vYzdIa3JlClZIWDZXR2UyS01ER3ZhRjhwcVpzcEhuWUJ5bFpQd1Nmb1B5WU1UcjBNVTBzU0c5Z05XRnZCUGZ6elJuajM0ZDIKMnNWR202a1o1cFJkRGIwcnJxRE1xK3lRaWNLcHdUWVZEMHc4M0t2cG9FclI3aDZPNDh6RUFjSHBWcDBzaWNZcApCOWMxTHl0V0dtTSt3MFk1MS9Bb2VIUVRmNUNJQXd1L1Byem9SWXB5Q1RuODF4SjIvWUxaZ1F5MStyRDVUOFJICjNua0dROEEyd3BOcWVRejRhSmRZU0hwZU9vMmFjTGNkcDk1YmU3ZEt2eWpDVks5WmYzYndxbkkraEhTZ1c4TzkKdGVocVlydGY1SFpoNXd2REY0M1lMUU9LcU9HZVlGZTYvZ3pVS01sRzRMaGhsRUZyM3BIUkZzeHp3N1RXdmZOUAp4dXJ6NTgyWTNxVVFUdy84SXphZ1c5eUdqVnNuRXlVSUE1bW1WTXFFTEhTTTUwOUx1UUltTndQWWhjSWQrWEJJCndZM014OVhIdFNMaUVsY2d2eFAyTFBBPQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==",
-        "client_key": "LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlKSndJQkFBS0NBZ0VBc0M4cG5qVlEyZnJiUFVMYlQrYTM3dTRPdURZUWpLT0duRTN1VWU4dWFrSjVlL011CitPS2hJWWFjaC92ZUh6NlZrN0Z5bFp3VThjUWEvU0cvNGt6UlZlU2VudjFIUUJ2dHo5YkZJWWF6UjZhY01vQkUKSVNJbGFuRGQxTFZPRU5TanJEQXY4Y3JUUmlwU25CNEY3WXd1OTdRU2Z4SEVMVm15dWV2Nk9qVUNXTHpQOGZ0Ygo0VlJLTm82RHI4NWpyOXhwMC9kYi83b05rZ0FOODFpVS8rN1lTdU9pZkV6YThrZUJCUmdnaU16elpWeDZHRi81CkxyTTFxcUltQ05CbExrNCtzajlXRjZsd01MV29zSjgrQUlabzA5bHlVWDJNa2ZmaE1PbSthZkxWWEQ4a24rS2oKN21nS2tyN0t1d3AyM1hsNTJzWk5kS1hRN21ZWGpRaUVhZ2c3bnNaNysybitpWGpJWXppeVdyc0JsbldUY3d5VApoMGdWM3k5QlV2NVBzYlg3UTZHYlF2K0NVSWU4ZjYvZjJLbkNnaEtoOHhqcEYrTmJXMTNLb2ptUklLU0V3cTZlCklCcVZvZkN5dGk0QjROU3FOYWJFS21SUlVXbFJkYnBMVVFFdTdtdm80UE1UNEZXZUY5N01CbGlPYktIeUlWNmMKd0pEWlhjMlFQOVlhMTNiWEZKTTh6UlBxMU9paFozRlRWdE50YmdHSERpNCttK2pYdk0xK2RlaTdrRWRDZmxORApLWThVaWpQVk5IeXJLSmcxODhWclpwZ1dvd1JzY1hRdUpqQ0ljdVNSQlF3S1pBN0R4MmJ2MWNBMjlnVmRZNEFTCkl2VVJ6QXNrRmgwaHBvK3VPc1hmSW9NaHdZbFA0UDhQeEtKaHVLYVhDN1JBN25wNzZ0czZUNTNyUWtVQ0F3RUEKQVFLQ0FnQUlSdjcyanR5d2tRZVIxajFGZ0xwdGdFT3l4ZDk3TEFlYitsRlRDaUN0SDFoanlXWVFqVjB5blFkbgpvQjZzYXgxTjVnMVRHQlVuMHFYTjlMTDJKOVBCN0U3RGUzVElmMGRwOTFZbG9CVjJMVTZ6VkxGZXVTTDI0RHliCnpMVFJONXhFNzdLZzhuMkFrMlowTFRqc0V5VDF3RUVLTlVSNU9QaWJvWW1OQ0lhR3NzQTJSeS9tNHpYbFlFYXgKa01uQUxtUE9jSldpNnhQT0l6Q0VtVW5PeUdMakNkVE5jREx0SlF6YnQybDM0K0VmaHZ1NWYzRE9qOTdhbUdtZgpDbU5taklpSGlWQTdKbHU5L2hyaHlXbDVUdGRIOUxSWlBjUEg2OVJwbnVHeVNwVlpreUhlWFNDRWgrRFBTaVZ1CktpeXhkUTZUaDdPRjRuQnhjdHh5Wk04THlEMDh3WFBhUVU3Y3dpYjJFMHc4SnYyblVycG4vOWZ4elFsSHNxUUkKNHdNOWg3UytVV1k2TmZsKzRmMzZiNG9FYUdOTTV4SG1mS0JtRm5NeVQ0OUppQ3h3R2gxSWRCblAwSU9wUGQ3UApFbmNzU0FRMDZRV05jT1hXbCsveXZGWEliZ1k1eTVhekdWdTdCWEVIZXZxZXg2NUxqK0QxeFpDNE5ycXJiQjV3Ckk2R0FVSGhVSzdmbGdyTWlmNHRzeWtoN01uY3JzcU9CTW10MU1SeXh4dnY2VU1Gamk3QkIrTzNmTkpNRlRPS24KdnBwVkh5aEFvbnh6K0JlOFFnKzFrNXZ3ZzBkT0MraTJrVXlacWRzUW5iTmRPUTFEU2ppT2Yra2g4YzU5ZnN6awpEb2FaU3BycnNBRzVxWlNwTjI4dTZSVFo1SmFIYUJzQkIwQmswemk1Y1hobGNBek9WUUtDQVFFQTA5dHBFOHNrCnR5b0NEaTJNakoweUdldFJDL01rbERvcHpOZ25hdkNwUjhRdXl0Vnl2a2JkaFNIN08yc005eTk3U3FreWoxeDQKR1l2L3RJbzdROWNQWXhXYVBGZ0h2Q243cGtyWFpMRWpXN2hnR1kzUWpLYTJDem5odUFZNFF4ZlVKdWZqclp4egp2Tm1yOEFyTWJKb3I3RlNIc2FQMEpzYllERXlrdmE2clFORGNjQVl5VVUrUER5eFJZRFJoa2tMOFdta0R0eXl6CmlWNElkTWllS0F3Zmc1ZEd6RHN4RDlzVFhmcGR2bHhUSGtKK3RnY1ZmeDVBQU9xK0tFaTBpTXduWU1BV2J2UXIKSWFaNzMzaE1tVXBYN0l5RUtEY3ZJOVpZdmpDbjNZYlBNTC9DbDRaSFBiMGMvYjA0cG9PRWtwbFpoODNjS1RXVgpYWXBDanZCVE0zYS8yd0tDQVFFQTFPVHdzUkUzUm9HQ2ZEa3dzQnpjdC9nT2hxaTZ3T2UwRDRuaWtrZWYxd2x1CjlINHRCczUxb1ZZNGdHUXIzSURMT0NZdmZaWUxEbmFValVQNFFjNVU0NGhpOHFBNjdmaHV0Tk5oVEttUEQvbjkKQnFXa1lwT2VTOWFyZzlrY3Y5MXFiNGhLVjBZQlU2dW10dlQyTjdFaXJoYmFacXlvTlo1R1ZYQW1SY1FQY2hWMgo2RUk1dzh6UFpXVVlRTDFqN0dsZXk0Ujg0SnUxbTVrUEZVME9lOGlicVA3NGttOU9yaGxNUmdVR0IrSkZXT2xxCkJoS01hcm1xeUtTNzZyM0dNY1QvZ08wVUJ2K0c5ZDM3dXdTTjIwNWR5VmZXa3dCTHllRWhpOGFMZXYrTE1hOEIKbjdpVko4UmJ0QWZjbnhMY3dGaGdrR2pQa3VocjJqZUdzUktlclBNd1h3S0NBUUFTVzYzMFVDTWpXQm1MZnZqeAo2bUZBQzdzZkxQZWJmSnJJckdabUJ1cTBWRlMxc045Ymk2cUFjZHhpWHJsbDVoQnAvTlZyeE5pSFpqRkhSTDh6CjlydlhtelNkVEFlSGo1L0YzakJpQWxPTkRDSVB0TkZBanVXeGZWZUk2Y2tRVDAxTC9jWWw4aXU1VHFkdWlwRUMKVEMzSU1kNzhUcmZHY0c2aVNqWHdWZVZ6SFdZc3N1ekRUUUNaa1A2UU5wbko0ZElhUjRWUjV5YTduWkZnQlU1bgpLLzNER21YQkp0UHVpczVYMDIweUpLL3pMRkhzbGhxUHhHQkpkQTM4VWFpTFBoMmZiYVhFQVphSE9QVDgvV0N0CjI5cFluaWlKajVhZkpXRFZRa1FabHlmM0VuYmJTSUI5NGhoVUNJU1RNVXhZbzc4MVhHcGFpOUVncE8xMWsyK3kKUXZVSEFvSUJBRkwxaTUxVU9oZnRhNjJBazZwczlNMXppaVdMSm9yNVB6ODIyZVZxcDZ5aDdteXpwbFFhcTlmYwp3MU8wdFNyTnZXTDU3bE9mM2xzYWRqUytJY1Z5NDcxdWJqQmhvOVVMbEFnK3ZwR2pHUzUrbWN5M1MyRm1hSzdnCnppRW92MzA4aUxkQmdzYVRidnp0eko5S3dZOWVKVWQxZkZHNlFpbnlyVEdwN0NBUGtIMUNRLzJwb056ZHVJdW8KWTFVRytDTXR4RlRHSWV0Y2dkNUtQSWh1YUpCdjBjaCs0dG9kS2FuS0RlRFRJRkIrS2N2RjJSellxWU1GS3JuWgpCNmtubmszU21FWGpISVRGbWcvQkd0RDdxMU9rTEFQRGlNZnJ1NXpGYjg4SjVWeGVyQjBHTnpuSU1jYzNTd3pTCmEzUkpZMkJJa0FoMTd6MHQrS2ttTGdSZVh4ckNBVDBDZ2dFQU9WK3huUHEvVVJaWXQ4QzFud3BtVGM5ek1JWW8KT2doSUx4VHB4T2dCeE83ckY2b0VGSEZrcTg1R1ArODdtRXJ3eDRFRG93QVlxS2c1eURRclVhSHMzTUhoUjN2VApvMHEyK3BueE1ZWDNrMkkwbThKck1xNWdvR2RSdm9pS0xMTmFReXhiaHJuU0MwZEtJRlA4V1YrWHA5bGtHemVDCndkL21Kc1BtSW9QSkNZM0hYMTdrMDRNU0pSaHZrRlo3aWFPRnI5dHQ4Mjc3K3dLVXZaQmRFV2o1alhzWkhQVEcKUDZVenRVWHdHRDBmdnkvWGRRMTRRbHhoU2lMZVRWSFV5ejBGQ0RRYkpZMWpOem9wYVdUem53NWhLTFNaUVZzeQpSRHFnc29yL3hYUC9oSDJ6NHRKQ0hxY1pWaUMreXQrOG92R3BOUFo5WkJtUzlFbkQxTjNsNUZ5ZTZRPT0KLS0tLS1FTkQgUlNBIFBSSVZBVEUgS0VZLS0tLS0K",
-        "cluster_ca_certificate": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUU2RENDQXRDZ0F3SUJBZ0lRWWFvNmVpNjVsM3JSa0dkYTc2bkhxVEFOQmdrcWhraUc5dzBCQVFzRkFEQU4KTVFzd0NRWURWUVFERXdKallUQWdGdzB5TmpBeE1qZ3hOak15TURSYUdBOHlNRFUyTURFeU9ERTJOREl3TkZvdwpEVEVMTUFrR0ExVUVBeE1DWTJFd2dnSWlNQTBHQ1NxR1NJYjNEUUVCQVFVQUE0SUNEd0F3Z2dJS0FvSUNBUUNjCi9hVmpDSEdiR29LU3p6anhjQmJ1TVY0UHhTV2I5c1pMWjN2dWNHcDFHaXFQdmtNZ3NCYmQ5QVV1ZzBnSDhJY0IKT3IrL2dDN0ZEQmlrR2xCck9zam5GMCsycVd1d1R1Z1pRZ1hScmJwR3RPSHZQRGJCSzJvaTl4UXZzQVFiN3ZhawplK0swYy83cGdRbW5RR25tZE9KbWtOcVlzR0lDaTdBMHpwTUtBek5aVnFxYllJc2QxVWpucXdPT1ZMQTFnZ3JDCjlpZ2p0YWRlZ1I2Y1Uwa01pSlhlTytUMnNnS0ExR2xlUnA2TFhuQVpLOXk0RmZ0Si9Zd0hPR0ZERk1rOGJWcXgKRVpQRzVzZmozYlRWTGVNRURvY25XMUorK2dIZDhVTUdsWWpHYWlMdGNFK2owWms3UnlldEZmNG9JV3FJQnZDTwpVVUhnZFVlOTdLSlA3TzFLTE93YnZSVUs2SHdrNUxjM3RtcEV0b3doQkNMeGpYYk02TTVNbkl0TUd4dGxQa1R5Ck9heXlTN1pSbm5XQlhWTm1QQjhtUEtLWG9IZjN4dDAvQWpuRVZDbUd0TWI0bktkVlcwS1hPTXlPSGlJMk5zOXUKL3RTOElQOGxFRVpldkxyUjYrTGUxUFpkQWU0Y3RzZW81Y25ycG8zTHZMSDZPRVpubFdkSFcyS3JNQUd2bWltRwpCNDE1NHB3bEpDTWlJNk5jVjZuazBKb1R3a2ZTQzJLQVFaR01ubmNyN21oSTF5bGRnVjlDUzVmYU5JUUlEcUZwClZBMHdnRWdxa0FBZWN4cU90ckVMRzFpdURLTDZUMWV0czZ0eW1OL0lEVldOdUhTa29mUkloTFRkMnZZcE1DbkEKNEtSb0JJRGVnMWx5ckR6U1FleHYwTlN2aWwwS3ZmUzhKWitYaTMwcXJRSURBUUFCbzBJd1FEQU9CZ05WSFE4QgpBZjhFQkFNQ0FxUXdEd1lEVlIwVEFRSC9CQVV3QXdFQi96QWRCZ05WSFE0RUZnUVVVQUtQNjNkVmFidUs3cHIwCmVueHFqL21YWWlNd0RRWUpLb1pJaHZjTkFRRUxCUUFEZ2dJQkFKWlNxOUV2YTBxd0paYmdoNGV0TzRPa0ZGYS8Kd2JKZEhRMzJFNFh6R3lBaVIzdFhWZExTQkR0NkM0ZzNnanBCSFFuNkJzVVUzTjhCOG54WVVnWXRlWm5FQnRwZgpHbFEzeStJUVhYVWo5VE1WaHpjMTZiK0NDUnJjZkN6N05FcXcrTXM0a1NNbmc0Yk9HWFJGRndXMUJsMG5EcFVXClRKVy8wakFnZ3ZtTXFVNFgvZEZhMWVqM0hqcTdKcUR5Q2R3bHE4THJjd1dIbitoSEttY0YwTTg2M05qbE4ydjcKTDhUT2I1TWp4ZlNqVXNQNzl4eFN2U0dzRGRxRE9kbXpzWEZVclBKbVlZSnNBM1pFN0IxQTYwRG8reFNQVGJNTAo3alpPSVdHalN5Nmc4WFlUcTZTdFhFQnlBVllIZmloYzNsY24vWGxlV0lmbjNZdVhpRDlkUVVJdVgyVVFDR2paClB5cFlXZUtwSXpQWk9lRlBWWEYrNVhRVkdFVlkwRnc2V2FRSFU1M3VsSWJuWVptNXpKV2FlS3FnSmI4b2o1WmkKOTJsVjMzZE9YZjFGaWRTU2RKcGFLVnVQeVAxN3BpTkFDZUN5eTNpMHBvNE8vcnlEcmI0dElVY3NCWHZVUjBBSgpheUNUWTkxUTN3bGtaUDM3N2dKcFBFOVhzWWlGSjJBcHNWcTdJVDlRVDkrV01nMi81TDFqeml3TU9ocis5VjhCClV4L1NsUTdjaHFxNlRFRCtOWnlVd2crcm1XcldxVHBtK3ZCN1dwTjNuQy9ETUljakxlYU9WZnhpbERvb0ppeXMKWmRYSnVNVmZkK2tPUjVnMmlma250YU5hN0VrMzRtdUxUQXhwM2dCa2tuQXhOTEJUaXEvSVd3R08xQnBNT0d0agoyY0pwT25adWpMaXJ1eHdSCi0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K",
-        "host": "https://learningstepsaks-y5q6kq2n.hcp.northeurope.azmk8s.io:443",
-        "password": "586ck63031gfd48i4mf35f2fr8fsi1p7oubg3s1n54yz8cdd7l5zob6h677pj27pogg32owhpgim5av32te21r5tcfj4uj3gg0nu3prqgr7jmr7zxivicxf0gfbhlufq",
-        "username": "clusterUser_learningstepsRG_learningsteps-aks"
-      },
-      "type": [
-        "object",
-        {
-          "client_certificate": "string",
-          "client_key": "string",
-          "cluster_ca_certificate": "string",
-          "host": "string",
-          "password": "string",
-          "username": "string"
-        }
-      ],
-      "sensitive": true
-    },
-    "kube_config_raw": {
-      "value": "apiVersion: v1\nclusters:\n- cluster:\n    certificate-authority-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUU2RENDQXRDZ0F3SUJBZ0lRWWFvNmVpNjVsM3JSa0dkYTc2bkhxVEFOQmdrcWhraUc5dzBCQVFzRkFEQU4KTVFzd0NRWURWUVFERXdKallUQWdGdzB5TmpBeE1qZ3hOak15TURSYUdBOHlNRFUyTURFeU9ERTJOREl3TkZvdwpEVEVMTUFrR0ExVUVBeE1DWTJFd2dnSWlNQTBHQ1NxR1NJYjNEUUVCQVFVQUE0SUNEd0F3Z2dJS0FvSUNBUUNjCi9hVmpDSEdiR29LU3p6anhjQmJ1TVY0UHhTV2I5c1pMWjN2dWNHcDFHaXFQdmtNZ3NCYmQ5QVV1ZzBnSDhJY0IKT3IrL2dDN0ZEQmlrR2xCck9zam5GMCsycVd1d1R1Z1pRZ1hScmJwR3RPSHZQRGJCSzJvaTl4UXZzQVFiN3ZhawplK0swYy83cGdRbW5RR25tZE9KbWtOcVlzR0lDaTdBMHpwTUtBek5aVnFxYllJc2QxVWpucXdPT1ZMQTFnZ3JDCjlpZ2p0YWRlZ1I2Y1Uwa01pSlhlTytUMnNnS0ExR2xlUnA2TFhuQVpLOXk0RmZ0Si9Zd0hPR0ZERk1rOGJWcXgKRVpQRzVzZmozYlRWTGVNRURvY25XMUorK2dIZDhVTUdsWWpHYWlMdGNFK2owWms3UnlldEZmNG9JV3FJQnZDTwpVVUhnZFVlOTdLSlA3TzFLTE93YnZSVUs2SHdrNUxjM3RtcEV0b3doQkNMeGpYYk02TTVNbkl0TUd4dGxQa1R5Ck9heXlTN1pSbm5XQlhWTm1QQjhtUEtLWG9IZjN4dDAvQWpuRVZDbUd0TWI0bktkVlcwS1hPTXlPSGlJMk5zOXUKL3RTOElQOGxFRVpldkxyUjYrTGUxUFpkQWU0Y3RzZW81Y25ycG8zTHZMSDZPRVpubFdkSFcyS3JNQUd2bWltRwpCNDE1NHB3bEpDTWlJNk5jVjZuazBKb1R3a2ZTQzJLQVFaR01ubmNyN21oSTF5bGRnVjlDUzVmYU5JUUlEcUZwClZBMHdnRWdxa0FBZWN4cU90ckVMRzFpdURLTDZUMWV0czZ0eW1OL0lEVldOdUhTa29mUkloTFRkMnZZcE1DbkEKNEtSb0JJRGVnMWx5ckR6U1FleHYwTlN2aWwwS3ZmUzhKWitYaTMwcXJRSURBUUFCbzBJd1FEQU9CZ05WSFE4QgpBZjhFQkFNQ0FxUXdEd1lEVlIwVEFRSC9CQVV3QXdFQi96QWRCZ05WSFE0RUZnUVVVQUtQNjNkVmFidUs3cHIwCmVueHFqL21YWWlNd0RRWUpLb1pJaHZjTkFRRUxCUUFEZ2dJQkFKWlNxOUV2YTBxd0paYmdoNGV0TzRPa0ZGYS8Kd2JKZEhRMzJFNFh6R3lBaVIzdFhWZExTQkR0NkM0ZzNnanBCSFFuNkJzVVUzTjhCOG54WVVnWXRlWm5FQnRwZgpHbFEzeStJUVhYVWo5VE1WaHpjMTZiK0NDUnJjZkN6N05FcXcrTXM0a1NNbmc0Yk9HWFJGRndXMUJsMG5EcFVXClRKVy8wakFnZ3ZtTXFVNFgvZEZhMWVqM0hqcTdKcUR5Q2R3bHE4THJjd1dIbitoSEttY0YwTTg2M05qbE4ydjcKTDhUT2I1TWp4ZlNqVXNQNzl4eFN2U0dzRGRxRE9kbXpzWEZVclBKbVlZSnNBM1pFN0IxQTYwRG8reFNQVGJNTAo3alpPSVdHalN5Nmc4WFlUcTZTdFhFQnlBVllIZmloYzNsY24vWGxlV0lmbjNZdVhpRDlkUVVJdVgyVVFDR2paClB5cFlXZUtwSXpQWk9lRlBWWEYrNVhRVkdFVlkwRnc2V2FRSFU1M3VsSWJuWVptNXpKV2FlS3FnSmI4b2o1WmkKOTJsVjMzZE9YZjFGaWRTU2RKcGFLVnVQeVAxN3BpTkFDZUN5eTNpMHBvNE8vcnlEcmI0dElVY3NCWHZVUjBBSgpheUNUWTkxUTN3bGtaUDM3N2dKcFBFOVhzWWlGSjJBcHNWcTdJVDlRVDkrV01nMi81TDFqeml3TU9ocis5VjhCClV4L1NsUTdjaHFxNlRFRCtOWnlVd2crcm1XcldxVHBtK3ZCN1dwTjNuQy9ETUljakxlYU9WZnhpbERvb0ppeXMKWmRYSnVNVmZkK2tPUjVnMmlma250YU5hN0VrMzRtdUxUQXhwM2dCa2tuQXhOTEJUaXEvSVd3R08xQnBNT0d0agoyY0pwT25adWpMaXJ1eHdSCi0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K\n    server: https://learningstepsaks-y5q6kq2n.hcp.northeurope.azmk8s.io:443\n  name: learningsteps-aks\ncontexts:\n- context:\n    cluster: learningsteps-aks\n    user: clusterUser_learningstepsRG_learningsteps-aks\n  name: learningsteps-aks\ncurrent-context: learningsteps-aks\nkind: Config\nusers:\n- name: clusterUser_learningstepsRG_learningsteps-aks\n  user:\n    client-certificate-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUZIVENDQXdXZ0F3SUJBZ0lRQ09JTWNTRUhNdE43Z084Tks0eHdRekFOQmdrcWhraUc5dzBCQVFzRkFEQU4KTVFzd0NRWURWUVFERXdKallUQWVGdzB5TmpBeE1qZ3hOak15TURSYUZ3MHlPREF4TWpneE5qUXlNRFJhTURBeApGekFWQmdOVkJBb1REbk41YzNSbGJUcHRZWE4wWlhKek1SVXdFd1lEVlFRREV3eHRZWE4wWlhKamJHbGxiblF3CmdnSWlNQTBHQ1NxR1NJYjNEUUVCQVFVQUE0SUNEd0F3Z2dJS0FvSUNBUUN3THltZU5WRFordHM5UXR0UDVyZnUKN2c2NE5oQ01vNGFjVGU1Ujd5NXFRbmw3OHk3NDRxRWhocHlIKzk0ZlBwV1RzWEtWbkJUeHhCcjlJYi9pVE5GVgo1SjZlL1VkQUcrM1Axc1VoaHJOSHBwd3lnRVFoSWlWcWNOM1V0VTRRMUtPc01DL3h5dE5HS2xLY0hnWHRqQzczCnRCSi9FY1F0V2JLNTYvbzZOUUpZdk0veCsxdmhWRW8yam9PdnptT3YzR25UOTF2L3VnMlNBQTN6V0pULzd0aEsKNDZKOFROcnlSNEVGR0NDSXpQTmxYSG9ZWC9rdXN6V3FvaVlJMEdVdVRqNnlQMVlYcVhBd3RhaXduejRBaG1qVAoyWEpSZll5UjkrRXc2YjVwOHRWY1B5U2Y0cVB1YUFxU3ZzcTdDbmJkZVhuYXhrMTBwZER1WmhlTkNJUnFDRHVlCnhudjdhZjZKZU1oak9MSmF1d0dXZFpOekRKT0hTQlhmTDBGUy9rK3h0ZnREb1p0Qy80SlFoN3gvcjkvWXFjS0MKRXFIekdPa1g0MXRiWGNxaU9aRWdwSVRDcnA0Z0dwV2g4TEsyTGdIZzFLbzFwc1FxWkZGUmFWRjF1a3RSQVM3dQphK2pnOHhQZ1ZaNFgzc3dHV0k1c29mSWhYcHpBa05sZHpaQS8xaHJYZHRjVWt6ek5FK3JVNktGbmNWTlcwMjF1CkFZY09MajZiNk5lOHpYNTE2THVRUjBKK1UwTXBqeFNLTTlVMGZLc29tRFh6eFd0bW1CYWpCR3h4ZEM0bU1JaHkKNUpFRkRBcGtEc1BIWnUvVndEYjJCVjFqZ0JJaTlSSE1DeVFXSFNHbWo2NDZ4ZDhpZ3lIQmlVL2cvdy9Fb21HNApwcGNMdEVEdWVudnEyenBQbmV0Q1JRSURBUUFCbzFZd1ZEQU9CZ05WSFE4QkFmOEVCQU1DQmFBd0V3WURWUjBsCkJBd3dDZ1lJS3dZQkJRVUhBd0l3REFZRFZSMFRBUUgvQkFJd0FEQWZCZ05WSFNNRUdEQVdnQlJRQW8vcmQxVnAKdTRydW12UjZmR3FQK1pkaUl6QU5CZ2txaGtpRzl3MEJBUXNGQUFPQ0FnRUFLclJBTVZ2aFdJNEJlVU93dTJpagorTkVoZ0ZFQjFJdVVQMmFKcnhnTUIrN2NTdXZGVTF4d1ZCQ1FuRGlmckR5QWRWWUM3RnRHTlQwUHBTK1hHSFQwCmhhS054R0NvRUVkMWtSVU4rakN1VHl2dXc5UUVvakNHUnNyUkJEY3I2V0tYeFhCZEdHblVtVURPQkp5UHczMjQKOGQ4NitqanBNQWFqVGE0aXhPbVJpdDREMktHYllTSHlGVURRa0YzNmN0cVdNWXMzSW50VzJEZ3dQSlRZSVdqWApBL3VIOXl3MkRpRU0zSm9ZR3pmQ1BRUkpPWDFBeng2Wm5zRkduZ1hlS3d2N0xuajFmQzJ4VVVaYm5vYzdIa3JlClZIWDZXR2UyS01ER3ZhRjhwcVpzcEhuWUJ5bFpQd1Nmb1B5WU1UcjBNVTBzU0c5Z05XRnZCUGZ6elJuajM0ZDIKMnNWR202a1o1cFJkRGIwcnJxRE1xK3lRaWNLcHdUWVZEMHc4M0t2cG9FclI3aDZPNDh6RUFjSHBWcDBzaWNZcApCOWMxTHl0V0dtTSt3MFk1MS9Bb2VIUVRmNUNJQXd1L1Byem9SWXB5Q1RuODF4SjIvWUxaZ1F5MStyRDVUOFJICjNua0dROEEyd3BOcWVRejRhSmRZU0hwZU9vMmFjTGNkcDk1YmU3ZEt2eWpDVks5WmYzYndxbkkraEhTZ1c4TzkKdGVocVlydGY1SFpoNXd2REY0M1lMUU9LcU9HZVlGZTYvZ3pVS01sRzRMaGhsRUZyM3BIUkZzeHp3N1RXdmZOUAp4dXJ6NTgyWTNxVVFUdy84SXphZ1c5eUdqVnNuRXlVSUE1bW1WTXFFTEhTTTUwOUx1UUltTndQWWhjSWQrWEJJCndZM014OVhIdFNMaUVsY2d2eFAyTFBBPQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==\n    client-key-data: LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlKSndJQkFBS0NBZ0VBc0M4cG5qVlEyZnJiUFVMYlQrYTM3dTRPdURZUWpLT0duRTN1VWU4dWFrSjVlL011CitPS2hJWWFjaC92ZUh6NlZrN0Z5bFp3VThjUWEvU0cvNGt6UlZlU2VudjFIUUJ2dHo5YkZJWWF6UjZhY01vQkUKSVNJbGFuRGQxTFZPRU5TanJEQXY4Y3JUUmlwU25CNEY3WXd1OTdRU2Z4SEVMVm15dWV2Nk9qVUNXTHpQOGZ0Ygo0VlJLTm82RHI4NWpyOXhwMC9kYi83b05rZ0FOODFpVS8rN1lTdU9pZkV6YThrZUJCUmdnaU16elpWeDZHRi81CkxyTTFxcUltQ05CbExrNCtzajlXRjZsd01MV29zSjgrQUlabzA5bHlVWDJNa2ZmaE1PbSthZkxWWEQ4a24rS2oKN21nS2tyN0t1d3AyM1hsNTJzWk5kS1hRN21ZWGpRaUVhZ2c3bnNaNysybitpWGpJWXppeVdyc0JsbldUY3d5VApoMGdWM3k5QlV2NVBzYlg3UTZHYlF2K0NVSWU4ZjYvZjJLbkNnaEtoOHhqcEYrTmJXMTNLb2ptUklLU0V3cTZlCklCcVZvZkN5dGk0QjROU3FOYWJFS21SUlVXbFJkYnBMVVFFdTdtdm80UE1UNEZXZUY5N01CbGlPYktIeUlWNmMKd0pEWlhjMlFQOVlhMTNiWEZKTTh6UlBxMU9paFozRlRWdE50YmdHSERpNCttK2pYdk0xK2RlaTdrRWRDZmxORApLWThVaWpQVk5IeXJLSmcxODhWclpwZ1dvd1JzY1hRdUpqQ0ljdVNSQlF3S1pBN0R4MmJ2MWNBMjlnVmRZNEFTCkl2VVJ6QXNrRmgwaHBvK3VPc1hmSW9NaHdZbFA0UDhQeEtKaHVLYVhDN1JBN25wNzZ0czZUNTNyUWtVQ0F3RUEKQVFLQ0FnQUlSdjcyanR5d2tRZVIxajFGZ0xwdGdFT3l4ZDk3TEFlYitsRlRDaUN0SDFoanlXWVFqVjB5blFkbgpvQjZzYXgxTjVnMVRHQlVuMHFYTjlMTDJKOVBCN0U3RGUzVElmMGRwOTFZbG9CVjJMVTZ6VkxGZXVTTDI0RHliCnpMVFJONXhFNzdLZzhuMkFrMlowTFRqc0V5VDF3RUVLTlVSNU9QaWJvWW1OQ0lhR3NzQTJSeS9tNHpYbFlFYXgKa01uQUxtUE9jSldpNnhQT0l6Q0VtVW5PeUdMakNkVE5jREx0SlF6YnQybDM0K0VmaHZ1NWYzRE9qOTdhbUdtZgpDbU5taklpSGlWQTdKbHU5L2hyaHlXbDVUdGRIOUxSWlBjUEg2OVJwbnVHeVNwVlpreUhlWFNDRWgrRFBTaVZ1CktpeXhkUTZUaDdPRjRuQnhjdHh5Wk04THlEMDh3WFBhUVU3Y3dpYjJFMHc4SnYyblVycG4vOWZ4elFsSHNxUUkKNHdNOWg3UytVV1k2TmZsKzRmMzZiNG9FYUdOTTV4SG1mS0JtRm5NeVQ0OUppQ3h3R2gxSWRCblAwSU9wUGQ3UApFbmNzU0FRMDZRV05jT1hXbCsveXZGWEliZ1k1eTVhekdWdTdCWEVIZXZxZXg2NUxqK0QxeFpDNE5ycXJiQjV3Ckk2R0FVSGhVSzdmbGdyTWlmNHRzeWtoN01uY3JzcU9CTW10MU1SeXh4dnY2VU1Gamk3QkIrTzNmTkpNRlRPS24KdnBwVkh5aEFvbnh6K0JlOFFnKzFrNXZ3ZzBkT0MraTJrVXlacWRzUW5iTmRPUTFEU2ppT2Yra2g4YzU5ZnN6awpEb2FaU3BycnNBRzVxWlNwTjI4dTZSVFo1SmFIYUJzQkIwQmswemk1Y1hobGNBek9WUUtDQVFFQTA5dHBFOHNrCnR5b0NEaTJNakoweUdldFJDL01rbERvcHpOZ25hdkNwUjhRdXl0Vnl2a2JkaFNIN08yc005eTk3U3FreWoxeDQKR1l2L3RJbzdROWNQWXhXYVBGZ0h2Q243cGtyWFpMRWpXN2hnR1kzUWpLYTJDem5odUFZNFF4ZlVKdWZqclp4egp2Tm1yOEFyTWJKb3I3RlNIc2FQMEpzYllERXlrdmE2clFORGNjQVl5VVUrUER5eFJZRFJoa2tMOFdta0R0eXl6CmlWNElkTWllS0F3Zmc1ZEd6RHN4RDlzVFhmcGR2bHhUSGtKK3RnY1ZmeDVBQU9xK0tFaTBpTXduWU1BV2J2UXIKSWFaNzMzaE1tVXBYN0l5RUtEY3ZJOVpZdmpDbjNZYlBNTC9DbDRaSFBiMGMvYjA0cG9PRWtwbFpoODNjS1RXVgpYWXBDanZCVE0zYS8yd0tDQVFFQTFPVHdzUkUzUm9HQ2ZEa3dzQnpjdC9nT2hxaTZ3T2UwRDRuaWtrZWYxd2x1CjlINHRCczUxb1ZZNGdHUXIzSURMT0NZdmZaWUxEbmFValVQNFFjNVU0NGhpOHFBNjdmaHV0Tk5oVEttUEQvbjkKQnFXa1lwT2VTOWFyZzlrY3Y5MXFiNGhLVjBZQlU2dW10dlQyTjdFaXJoYmFacXlvTlo1R1ZYQW1SY1FQY2hWMgo2RUk1dzh6UFpXVVlRTDFqN0dsZXk0Ujg0SnUxbTVrUEZVME9lOGlicVA3NGttOU9yaGxNUmdVR0IrSkZXT2xxCkJoS01hcm1xeUtTNzZyM0dNY1QvZ08wVUJ2K0c5ZDM3dXdTTjIwNWR5VmZXa3dCTHllRWhpOGFMZXYrTE1hOEIKbjdpVko4UmJ0QWZjbnhMY3dGaGdrR2pQa3VocjJqZUdzUktlclBNd1h3S0NBUUFTVzYzMFVDTWpXQm1MZnZqeAo2bUZBQzdzZkxQZWJmSnJJckdabUJ1cTBWRlMxc045Ymk2cUFjZHhpWHJsbDVoQnAvTlZyeE5pSFpqRkhSTDh6CjlydlhtelNkVEFlSGo1L0YzakJpQWxPTkRDSVB0TkZBanVXeGZWZUk2Y2tRVDAxTC9jWWw4aXU1VHFkdWlwRUMKVEMzSU1kNzhUcmZHY0c2aVNqWHdWZVZ6SFdZc3N1ekRUUUNaa1A2UU5wbko0ZElhUjRWUjV5YTduWkZnQlU1bgpLLzNER21YQkp0UHVpczVYMDIweUpLL3pMRkhzbGhxUHhHQkpkQTM4VWFpTFBoMmZiYVhFQVphSE9QVDgvV0N0CjI5cFluaWlKajVhZkpXRFZRa1FabHlmM0VuYmJTSUI5NGhoVUNJU1RNVXhZbzc4MVhHcGFpOUVncE8xMWsyK3kKUXZVSEFvSUJBRkwxaTUxVU9oZnRhNjJBazZwczlNMXppaVdMSm9yNVB6ODIyZVZxcDZ5aDdteXpwbFFhcTlmYwp3MU8wdFNyTnZXTDU3bE9mM2xzYWRqUytJY1Z5NDcxdWJqQmhvOVVMbEFnK3ZwR2pHUzUrbWN5M1MyRm1hSzdnCnppRW92MzA4aUxkQmdzYVRidnp0eko5S3dZOWVKVWQxZkZHNlFpbnlyVEdwN0NBUGtIMUNRLzJwb056ZHVJdW8KWTFVRytDTXR4RlRHSWV0Y2dkNUtQSWh1YUpCdjBjaCs0dG9kS2FuS0RlRFRJRkIrS2N2RjJSellxWU1GS3JuWgpCNmtubmszU21FWGpISVRGbWcvQkd0RDdxMU9rTEFQRGlNZnJ1NXpGYjg4SjVWeGVyQjBHTnpuSU1jYzNTd3pTCmEzUkpZMkJJa0FoMTd6MHQrS2ttTGdSZVh4ckNBVDBDZ2dFQU9WK3huUHEvVVJaWXQ4QzFud3BtVGM5ek1JWW8KT2doSUx4VHB4T2dCeE83ckY2b0VGSEZrcTg1R1ArODdtRXJ3eDRFRG93QVlxS2c1eURRclVhSHMzTUhoUjN2VApvMHEyK3BueE1ZWDNrMkkwbThKck1xNWdvR2RSdm9pS0xMTmFReXhiaHJuU0MwZEtJRlA4V1YrWHA5bGtHemVDCndkL21Kc1BtSW9QSkNZM0hYMTdrMDRNU0pSaHZrRlo3aWFPRnI5dHQ4Mjc3K3dLVXZaQmRFV2o1alhzWkhQVEcKUDZVenRVWHdHRDBmdnkvWGRRMTRRbHhoU2lMZVRWSFV5ejBGQ0RRYkpZMWpOem9wYVdUem53NWhLTFNaUVZzeQpSRHFnc29yL3hYUC9oSDJ6NHRKQ0hxY1pWaUMreXQrOG92R3BOUFo5WkJtUzlFbkQxTjNsNUZ5ZTZRPT0KLS0tLS1FTkQgUlNBIFBSSVZBVEUgS0VZLS0tLS0K\n    token: 586ck63031gfd48i4mf35f2fr8fsi1p7oubg3s1n54yz8cdd7l5zob6h677pj27pogg32owhpgim5av32te21r5tcfj4uj3gg0nu3prqgr7jmr7zxivicxf0gfbhlufq\n",
-      "type": "string",
-      "sensitive": true
-    }
-  },
+  "outputs": {},
   "resources": [
     {
       "mode": "data",
@@ -288,7 +260,7 @@
                   "Update",
                   "GetRotationPolicy"
                 ],
-                "object_id": "b6e85111-a47a-4c11-924c-169b619c9b1d",
+                "object_id": "9d175185-a369-4251-b1cc-dd4588e07a7e",
                 "secret_permissions": [
                   "Get",
                   "List"
@@ -342,8 +314,8 @@
         {
           "schema_version": 0,
           "attributes": {
-            "application_id": "",
-            "certificate_permissions": [],
+            "application_id": null,
+            "certificate_permissions": null,
             "id": "/subscriptions/a2c41e5d-454d-4c0b-9f7a-2260d54011e7/resourceGroups/learningstepsRG/providers/Microsoft.KeyVault/vaults/kv-learningsteps-1769/objectId/b6e85111-a47a-4c11-924c-169b619c9b1d",
             "key_permissions": [
               "Get",
@@ -359,7 +331,7 @@
               "Get",
               "List"
             ],
-            "storage_permissions": [],
+            "storage_permissions": null,
             "tenant_id": "c0531484-50fa-4ff2-97df-b1f2d4810603",
             "timeouts": null
           },
@@ -1364,7 +1336,7 @@
         {
           "schema_version": 0,
           "attributes": {
-            "binary_data": {},
+            "binary_data": null,
             "data": {
               "init.sql": "      -- We use $do$ to avoid the $$ parsing error in Checkov\n      DO $do$ \n      BEGIN \n        IF NOT EXISTS (SELECT FROM pg_catalog.pg_roles WHERE rolname = 'fastapiuser') THEN\n          CREATE USER fastapiuser WITH PASSWORD 'pass123';\n        END IF;\n      END $do$;\n      \n      GRANT ALL PRIVILEGES ON DATABASE fastapidb TO fastapiuser;\n\n      CREATE TABLE IF NOT EXISTS entries (\n          id SERIAL PRIMARY KEY,\n          title TEXT NOT NULL,\n          content TEXT,\n          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n      );\n"
             },
@@ -1372,10 +1344,10 @@
             "immutable": false,
             "metadata": [
               {
-                "annotations": {},
+                "annotations": null,
                 "generate_name": "",
                 "generation": 0,
-                "labels": {},
+                "labels": null,
                 "name": "db-init-script",
                 "namespace": "app",
                 "resource_version": "1660",
@@ -1410,19 +1382,20 @@
       "provider": "provider[\"registry.terraform.io/hashicorp/kubernetes\"]",
       "instances": [
         {
+          "status": "tainted",
           "schema_version": 1,
           "attributes": {
             "id": "app/learningsteps-api",
             "metadata": [
               {
-                "annotations": {},
+                "annotations": null,
                 "generate_name": "",
-                "generation": 1,
-                "labels": {},
+                "generation": 0,
+                "labels": null,
                 "name": "learningsteps-api",
                 "namespace": "app",
-                "resource_version": "5284",
-                "uid": "d27d5e7b-4d65-4fc4-86e6-1e8e7c989824"
+                "resource_version": "",
+                "uid": ""
               }
             ],
             "spec": [
@@ -1440,22 +1413,12 @@
                     }
                   }
                 ],
-                "strategy": [
-                  {
-                    "rolling_update": [
-                      {
-                        "max_surge": "25%",
-                        "max_unavailable": "25%"
-                      }
-                    ],
-                    "type": "RollingUpdate"
-                  }
-                ],
+                "strategy": [],
                 "template": [
                   {
                     "metadata": [
                       {
-                        "annotations": {},
+                        "annotations": null,
                         "generate_name": "",
                         "generation": 0,
                         "labels": {
@@ -1474,8 +1437,8 @@
                         "automount_service_account_token": true,
                         "container": [
                           {
-                            "args": [],
-                            "command": [],
+                            "args": null,
+                            "command": null,
                             "env": [
                               {
                                 "name": "PYTHONUNBUFFERED",
@@ -1494,13 +1457,13 @@
                               },
                               {
                                 "name": "DB_NAME",
-                                "value": "fastapidb",
+                                "value": "postgres",
                                 "value_from": []
                               }
                             ],
                             "env_from": [],
                             "image": "learningstepsregistry20260126.azurecr.io/learningsteps-api:v1",
-                            "image_pull_policy": "IfNotPresent",
+                            "image_pull_policy": "",
                             "lifecycle": [],
                             "liveness_probe": [
                               {
@@ -1512,11 +1475,11 @@
                                     "host": "",
                                     "http_header": [],
                                     "path": "/health",
-                                    "port": "8000",
+                                    "port": "80",
                                     "scheme": "HTTP"
                                   }
                                 ],
-                                "initial_delay_seconds": 5,
+                                "initial_delay_seconds": 0,
                                 "period_seconds": 10,
                                 "success_threshold": 1,
                                 "tcp_socket": [],
@@ -1550,11 +1513,11 @@
                                     "host": "",
                                     "http_header": [],
                                     "path": "/health",
-                                    "port": "8000",
+                                    "port": "80",
                                     "scheme": "HTTP"
                                   }
                                 ],
-                                "initial_delay_seconds": 5,
+                                "initial_delay_seconds": 0,
                                 "period_seconds": 10,
                                 "success_threshold": 1,
                                 "tcp_socket": [],
@@ -1578,7 +1541,7 @@
                                 "allow_privilege_escalation": false,
                                 "capabilities": [
                                   {
-                                    "add": [],
+                                    "add": null,
                                     "drop": [
                                       "NET_RAW"
                                     ]
@@ -1597,7 +1560,7 @@
                             "stdin": false,
                             "stdin_once": false,
                             "termination_message_path": "/dev/termination-log",
-                            "termination_message_policy": "File",
+                            "termination_message_policy": "",
                             "tty": false,
                             "volume_device": [],
                             "volume_mount": [
@@ -1655,24 +1618,19 @@
                             ],
                             "env_from": [],
                             "image": "postgres:13",
-                            "image_pull_policy": "IfNotPresent",
+                            "image_pull_policy": "",
                             "lifecycle": [],
                             "liveness_probe": [],
                             "name": "init-db-user",
                             "port": [],
                             "readiness_probe": [],
-                            "resources": [
-                              {
-                                "limits": {},
-                                "requests": {}
-                              }
-                            ],
+                            "resources": [],
                             "security_context": [],
                             "startup_probe": [],
                             "stdin": false,
                             "stdin_once": false,
                             "termination_message_path": "/dev/termination-log",
-                            "termination_message_policy": "File",
+                            "termination_message_policy": "",
                             "tty": false,
                             "volume_device": [],
                             "volume_mount": [
@@ -1689,23 +1647,23 @@
                           }
                         ],
                         "node_name": "",
-                        "node_selector": {},
+                        "node_selector": null,
                         "os": [],
                         "priority_class_name": "",
                         "readiness_gate": [],
                         "restart_policy": "Always",
                         "runtime_class_name": "",
-                        "scheduler_name": "default-scheduler",
+                        "scheduler_name": "",
                         "security_context": [
                           {
-                            "fs_group": "1000",
+                            "fs_group": "",
                             "fs_group_change_policy": "",
                             "run_as_group": "",
                             "run_as_non_root": true,
-                            "run_as_user": "1000",
+                            "run_as_user": "",
                             "se_linux_options": [],
                             "seccomp_profile": [],
-                            "supplemental_groups": [],
+                            "supplemental_groups": null,
                             "sysctl": [],
                             "windows_options": []
                           }
@@ -1869,10 +1827,10 @@
           ],
           "identity_schema_version": 1,
           "identity": {
-            "api_version": "apps/v1",
-            "kind": "Deployment",
-            "name": "learningsteps-api",
-            "namespace": "app"
+            "api_version": null,
+            "kind": null,
+            "name": null,
+            "namespace": null
           },
           "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo2MDAwMDAwMDAwMDAsImRlbGV0ZSI6NjAwMDAwMDAwMDAwLCJ1cGRhdGUiOjYwMDAwMDAwMDAwMH0sInNjaGVtYV92ZXJzaW9uIjoiMSJ9",
           "dependencies": [
@@ -1907,10 +1865,10 @@
             "id": "app",
             "metadata": [
               {
-                "annotations": {},
+                "annotations": null,
                 "generate_name": "",
                 "generation": 0,
-                "labels": {},
+                "labels": null,
                 "name": "app",
                 "resource_version": "1656",
                 "uid": "db0d1021-c8fa-447d-8a53-b2cad0c4cb56"

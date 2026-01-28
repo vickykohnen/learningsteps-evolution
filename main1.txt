@@ -5,7 +5,6 @@ terraform {
       source  = "hashicorp/azurerm"
       version = "~> 3.0"
     }
-
     kubernetes = {
       source  = "hashicorp/kubernetes"
       version = "~> 2.0"
@@ -17,7 +16,12 @@ provider "azurerm" {
   features {}
 }
 
-
+provider "kubernetes" {
+  host                   = azurerm_kubernetes_cluster.aks.kube_config.0.host
+  client_certificate     = base64decode(azurerm_kubernetes_cluster.aks.kube_config.0.client_certificate)
+  client_key             = base64decode(azurerm_kubernetes_cluster.aks.kube_config.0.client_key)
+  cluster_ca_certificate = base64decode(azurerm_kubernetes_cluster.aks.kube_config.0.cluster_ca_certificate)
+}
 
 # Fetches your current Azure login details (Tenant, Subscription, etc.)
 data "azurerm_client_config" "current" {}
@@ -84,11 +88,13 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
   sku_tier = "Standard" # CKV_AZURE_170
 
-  private_cluster_enabled = false # CKV_AZURE_115
+  private_cluster_enabled = true # CKV_AZURE_115
 
-  # local_account_disabled = true # CKV_AZURE_141
+  local_account_disabled = true # CKV_AZURE_141
 
-  api_server_authorized_ip_ranges = ["79.214.9.64/32"] # CKV_AZURE_6
+  # api_server_authorized_ip_ranges = [
+  #   "YOUR_PUBLIC_IP/32"
+  # ] # CKV_AZURE_6
 
   automatic_channel_upgrade = "stable" # CKV_AZURE_171
 
@@ -97,11 +103,11 @@ resource "azurerm_kubernetes_cluster" "aks" {
   default_node_pool {
     name                         = "system"
     node_count                   = 1
-    vm_size                      = "Standard_D4s_v3"
+    vm_size                      = "Standard_D2s_v3"
     vnet_subnet_id               = azurerm_subnet.aks_subnet.id
-    only_critical_addons_enabled = true      # CKV_AZURE_232
-    max_pods                     = 40        # CKV_AZURE_168
-    os_disk_type                 = "Managed" # CKV_AZURE_226
+    only_critical_addons_enabled = true        # CKV_AZURE_232
+    max_pods                     = 50          # CKV_AZURE_168
+    os_disk_type                 = "Ephemeral" # CKV_AZURE_226
   }
 
   network_profile {
@@ -123,7 +129,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     secret_rotation_enabled = true
   }
 
-  # disk_encryption_set_id = azurerm_disk_encryption_set.aks.id # CKV_AZURE_117
+  disk_encryption_set_id = azurerm_disk_encryption_set.aks.id # CKV_AZURE_117
 
   confidential_computing {
     sgx_quote_helper_enabled = true
@@ -141,16 +147,16 @@ resource "azurerm_log_analytics_workspace" "law" {
 }
 
 # Disk Encryption Set
-# resource "azurerm_disk_encryption_set" "aks" {
-#  name                = "aks-des"
-#  location            = azurerm_resource_group.aks_rg.location
-#  resource_group_name = azurerm_resource_group.aks_rg.name
-#  key_vault_key_id    = azurerm_key_vault_key.des.id
+resource "azurerm_disk_encryption_set" "aks" {
+  name                = "aks-des"
+  location            = azurerm_resource_group.aks_rg.location
+  resource_group_name = azurerm_resource_group.aks_rg.name
+  key_vault_key_id    = azurerm_key_vault_key.des.id
 
-#  identity {
-#    type = "SystemAssigned"
-#  }
-# }
+  identity {
+    type = "SystemAssigned"
+  }
+}
 
 # 5. SECURITY (Key Vault & Permissions)
 # Key Vault
@@ -172,73 +178,24 @@ resource "azurerm_key_vault" "kv" {
   } # CKV_AZURE_109
 }
 
-# Personal Access Policy - Allows YOU (the person running Terraform) to add secrets
-resource "azurerm_key_vault_access_policy" "user_policy" {
-  key_vault_id = azurerm_key_vault.kv.id
-  tenant_id    = data.azurerm_client_config.current.tenant_id
-  object_id    = data.azurerm_client_config.current.object_id
-
-  key_permissions = [
-    "Get", "List", "Create", "Delete", "Update", "Purge", "Recover", "GetRotationPolicy", "Rotate"
-  ]
-  secret_permissions = ["Get", "List", "Set", "Delete", "Purge"]
-}
-
-# The AKS Kubelet Access Policy
-resource "azurerm_key_vault_access_policy" "aks_policy" {
-  key_vault_id = azurerm_key_vault.kv.id
-  tenant_id    = data.azurerm_client_config.current.tenant_id
-  object_id    = azurerm_kubernetes_cluster.aks.kubelet_identity[0].object_id
-
-  key_permissions = [
-    "Get", "List", "Create", "Delete", "Update", "GetRotationPolicy"
-  ]
-  secret_permissions = ["Get", "List"]
-}
-
-resource "azurerm_key_vault_access_policy" "tf_secret_policy" {
-  key_vault_id = azurerm_key_vault.kv.id
-  tenant_id    = data.azurerm_client_config.current.tenant_id
-  object_id    = "b00cd8fb-3be9-4c4b-ae15-35c22d7bccab" # your Terraform identity
-
-  secret_permissions = [
-    "Get",
-    "List",
-    "Set",
-    "Delete",
-    "Purge"
-  ]
-
-  key_permissions = [
-    "Get",
-    "List"
-  ]
-}
-
 # Key Value Key
-# resource "azurerm_key_vault_key" "des" {
-#  name         = "aks-disk-encryption-key"
-#  key_vault_id = azurerm_key_vault.kv.id
-#  key_type     = "RSA"
-#  key_size     = 2048
-#
-#  key_opts = [
-#    "decrypt",
-#    "encrypt",
-#    "sign",
-#    "unwrapKey",
-#    "wrapKey",
-#    "verify"
-#  ]
+resource "azurerm_key_vault_key" "des" {
+  name         = "aks-disk-encryption-key"
+  key_vault_id = azurerm_key_vault.kv.id
+  key_type     = "RSA"
+  key_size     = 2048
 
-# This is crucial!
-#  depends_on = [
-#    azurerm_key_vault_access_policy.user_policy
-#  azurerm_key_vault_access_policy.aks_policy,
-#  azurerm_key_vault_access_policy.allow_rotation_policy,
-#  azurerm_private_endpoint.kv
-#  ]
-# }
+  key_opts = [
+    "decrypt",
+    "encrypt",
+    "sign",
+    "unwrapKey",
+    "wrapKey",
+    "verify"
+  ]
+  # This is crucial!
+  depends_on = [azurerm_key_vault_access_policy.user_policy]
+}
 
 # Private Endpoint
 resource "azurerm_private_endpoint" "kv" {
@@ -255,15 +212,26 @@ resource "azurerm_private_endpoint" "kv" {
   }
 }
 
-resource "azurerm_key_vault_access_policy" "allow_rotation_policy" {
+# Personal Access Policy - Allows YOU (the person running Terraform) to add secrets
+resource "azurerm_key_vault_access_policy" "user_policy" {
   key_vault_id = azurerm_key_vault.kv.id
   tenant_id    = data.azurerm_client_config.current.tenant_id
-  # object_id    = azurerm_kubernetes_cluster.aks.kubelet_identity[0].object_id
-  object_id = "b00cd8fb-3be9-4c4b-ae15-35c22d7bccab"
+  object_id    = data.azurerm_client_config.current.object_id
 
   key_permissions = [
-    "Get", "List", "GetRotationPolicy"
+    "Get", "List", "Create", "Delete", "Update", "Purge", "Recover"
   ]
+  
+  secret_permissions = ["Get", "List", "Set", "Delete", "Purge"]
+}
+
+# The AKS Kubelet Access Policy
+resource "azurerm_key_vault_access_policy" "aks_policy" {
+  key_vault_id = azurerm_key_vault.kv.id
+  tenant_id    = data.azurerm_client_config.current.tenant_id
+  object_id    = azurerm_kubernetes_cluster.aks.kubelet_identity[0].object_id
+
+  secret_permissions = ["Get", "List"]
 }
 
 resource "random_password" "db_pass" {
@@ -337,7 +305,6 @@ resource "kubernetes_namespace" "app" {
 
 # 9. Kubernetes Deployment
 resource "kubernetes_deployment" "api" {
-  depends_on = [kubernetes_namespace.app]
   metadata {
     name      = "learningsteps-api"
     namespace = kubernetes_namespace.app.metadata[0].name
@@ -358,8 +325,6 @@ resource "kubernetes_deployment" "api" {
       spec {
         security_context {
           run_as_non_root = true
-          run_as_user     = 1000 # Standard non-root UID
-          fs_group        = 1000
         }
 
         # INIT Container: ensure the app user exists
@@ -434,17 +399,15 @@ resource "kubernetes_deployment" "api" {
           liveness_probe {
             http_get {
               path = "/health"
-              port = 8000
+              port = 80
             }
-            initial_delay_seconds = 5
           }
 
           readiness_probe {
             http_get {
               path = "/health"
-              port = 8000
+              port = 80
             }
-            initial_delay_seconds = 5
           }
 
           security_context {
@@ -469,8 +432,7 @@ resource "kubernetes_deployment" "api" {
           }
           env {
             name  = "DB_NAME"
-            value = "fastapidb" # Fixed mismatch (was 'postgres')
-            # value = "postgres"
+            value = "postgres"
           }
 
           port {
@@ -543,33 +505,4 @@ resource "kubernetes_config_map" "db_init_script" {
       );
     EOF
   }
-}
-
-# Raw kubeconfig YAML as string
-output "kube_config_raw" {
-  value     = azurerm_kubernetes_cluster.aks.kube_config_raw
-  sensitive = true
-}
-
-# Detailed fields (host, certs, etc.)
-output "kube_config" {
-  value     = azurerm_kubernetes_cluster.aks.kube_config[0]
-  sensitive = true
-}
-
-data "azurerm_kubernetes_cluster" "aks" {
-  name                = azurerm_kubernetes_cluster.aks.name
-  resource_group_name = azurerm_kubernetes_cluster.aks.resource_group_name
-}
-
-provider "kubernetes" {
-  # host                   = azurerm_kubernetes_cluster.aks.kube_config.0.host
-  # host                   = "learningstepsaks-y5q6kq2n.hcp.northeurope.azmk8s.io"
-  # host                   = "https://${data.azurerm_kubernetes_cluster.aks.fqdn}"
-  # host                   = data.azurerm_kubernetes_cluster.aks.kube_config.0.host 
-  host                   = azurerm_kubernetes_cluster.aks.kube_config[0].host
-  client_certificate     = base64decode(azurerm_kubernetes_cluster.aks.kube_config.0.client_certificate)
-  client_key             = base64decode(azurerm_kubernetes_cluster.aks.kube_config.0.client_key)
-  cluster_ca_certificate = base64decode(azurerm_kubernetes_cluster.aks.kube_config.0.cluster_ca_certificate)
-
 }
