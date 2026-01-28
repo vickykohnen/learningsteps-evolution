@@ -1,0 +1,15 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: learningsteps-api-monitor
+  namespace: monitoring # Usually needs to be in the same namespace as Prometheus
+  labels:
+    release: monitoring # This MUST match the name of your Helm install
+spec:
+  selector:
+    matchLabels:
+      app: learningsteps # This MUST match the labels on your FastAPI SERVICE
+  endpoints:
+  - port: http # The name of the port in your Service definition
+    path: /metrics
+    interval: 15s

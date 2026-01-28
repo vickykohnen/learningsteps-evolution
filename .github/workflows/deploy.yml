@@ -45,6 +45,9 @@ jobs:
 
       - name: Build Docker image
         working-directory: ./api
+        # tag 1 is floating tag - this the current stable version 1
+        # tag 2 (github.sha) is the immutable or unique tag because the github.sha
+        # changes with every single commit (tag is a unique fingerprint)
         run: docker build -t ${{ secrets.ACR_LOGIN_SERVER }}/learningsteps-api:v1 -t ${{ secrets.ACR_LOGIN_SERVER }}/learningsteps-api:v1-${{ github.sha }} .
 
       - name: Run Trivy vulnerability scanner

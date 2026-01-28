@@ -1,6 +1,9 @@
 # Use an official Python runtime as a parent image
 FROM python:3.11-slim
 
+# Install the prometheus client library
+RUN pip install prometheus-client
+
 # Set the working directory in the container
 WORKDIR /app
 

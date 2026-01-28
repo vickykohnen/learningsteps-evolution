@@ -33,6 +33,14 @@ resource "azurerm_resource_group" "aks_rg" {
   location = "northeurope"
 }
 
+# resource "azurerm_container_registry" "acr" {
+#  name                = "learningstepsregistry20260126"
+#  resource_group_name = azurerm_resource_group.aks_rg.name
+#  location            = azurerm_resource_group.aks_rg.location
+#  sku                 = "Standard"
+#  admin_enabled       = false   # generally recommended to keep it disabled
+# }
+
 resource "azurerm_virtual_network" "vnet" {
   name                = "learningsteps-vnet"
   address_space       = ["10.0.0.0/16"]
