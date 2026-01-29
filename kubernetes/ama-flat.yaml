@@ -1,0 +1,13 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: ama-metrics-settings-configmap
+  namespace: kube-system
+  labels:
+    managed-by: azure
+data:
+  settings-configmap: |
+    schema-version = "1"
+    config-version = "ver.1"
+    podannotationnamespaceregex = "app"
+    default-scrape-settings-enabled = true

@@ -148,8 +148,13 @@ resource "azurerm_kubernetes_cluster" "aks" {
     max_pods                     = 40
     os_disk_type                 = "Managed"
     temporary_name_for_rotation  = "tempnodepool"
-  }
 
+    upgrade_settings {
+      max_surge                     = "10%"
+      drain_timeout_in_minutes      = 0
+      node_soak_duration_in_minutes = 0
+    }
+  }
   network_profile {
     network_plugin = "azure"
     service_cidr   = "10.100.0.0/16"
@@ -162,6 +167,12 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
   key_vault_secrets_provider {
     secret_rotation_enabled = true
+  }
+
+  # This is for Prometheus 
+  monitor_metrics {
+    annotations_allowed = null
+    labels_allowed      = null
   }
 }
 
@@ -269,7 +280,16 @@ resource "kubernetes_deployment" "api" {
     replicas = 2
     selector { match_labels = { app = "learningsteps" } }
     template {
-      metadata { labels = { app = "learningsteps" } }
+      metadata {
+        labels = { app = "learningsteps"
+        }
+        # This is for Grafana/Prometheus
+        annotations = {
+          "prometheus.io/scrape" = "true"
+          "prometheus.io/port"   = "8001"
+          "prometheus.io/path"   = "/metrics"
+        }
+      }
       spec {
         container {
           name  = "api"

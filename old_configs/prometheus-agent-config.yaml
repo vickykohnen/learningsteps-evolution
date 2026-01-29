@@ -1,0 +1,16 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: ama-metrics-settings-configmap
+  namespace: kube-system
+data:
+  schema-version: v1
+  config-version: ver.1
+  pod-annotation-based-scraping: |-
+    podannotationnamespaceregex = "app"
+  default-scrape-settings-enabled: |-
+    kubelet = true
+    coredns = false
+    cadvisor = true
+    kubestate = true
+    nodeexporter = true
