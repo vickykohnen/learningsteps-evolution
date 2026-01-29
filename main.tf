@@ -174,12 +174,12 @@ resource "azurerm_log_analytics_workspace" "law" {
 }
 
 resource "azurerm_key_vault" "kv" {
-  name                     = "kv-learningsteps-1769"
-  location                 = azurerm_resource_group.aks_rg.location
-  resource_group_name      = azurerm_resource_group.aks_rg.name
-  tenant_id                = data.azurerm_client_config.current.tenant_id
-  sku_name                 = "standard"
-  purge_protection_enabled = true
+  name                       = "kv-learningsteps-1769"
+  location                   = azurerm_resource_group.aks_rg.location
+  resource_group_name        = azurerm_resource_group.aks_rg.name
+  tenant_id                  = data.azurerm_client_config.current.tenant_id
+  sku_name                   = "standard"
+  purge_protection_enabled   = true
   soft_delete_retention_days = 7
 }
 
@@ -218,19 +218,19 @@ resource "azurerm_private_dns_zone_virtual_network_link" "dns_link" {
 }
 
 resource "azurerm_postgresql_flexible_server" "db" {
-  name                   = "learningsteps-db-server"
-  zone                   = 1
-  resource_group_name    = azurerm_resource_group.aks_rg.name
-  location               = azurerm_resource_group.aks_rg.location
-  version                = "13"
+  name                          = "learningsteps-db-server"
+  zone                          = 1
+  resource_group_name           = azurerm_resource_group.aks_rg.name
+  location                      = azurerm_resource_group.aks_rg.location
+  version                       = "13"
   public_network_access_enabled = false
-  delegated_subnet_id    = azurerm_subnet.db_subnet.id
-  private_dns_zone_id    = azurerm_private_dns_zone.dns.id
-  administrator_login    = "psqladmin"
-  administrator_password = azurerm_key_vault_secret.db_password.value
-  sku_name               = "GP_Standard_D2ds_v4"
-  
-  depends_on             = [azurerm_private_dns_zone_virtual_network_link.dns_link]
+  delegated_subnet_id           = azurerm_subnet.db_subnet.id
+  private_dns_zone_id           = azurerm_private_dns_zone.dns.id
+  administrator_login           = "psqladmin"
+  administrator_password        = azurerm_key_vault_secret.db_password.value
+  sku_name                      = "GP_Standard_D2ds_v4"
+
+  depends_on = [azurerm_private_dns_zone_virtual_network_link.dns_link]
 }
 
 resource "azurerm_postgresql_flexible_server_database" "app_db" {
@@ -241,6 +241,23 @@ resource "azurerm_postgresql_flexible_server_database" "app_db" {
 # 7. KUBERNETES APP
 resource "kubernetes_namespace" "app" {
   metadata { name = "app" }
+}
+
+# 1. THE MISSING CONFIGMAP
+resource "kubernetes_config_map" "learningsteps_config" {
+  metadata {
+    name      = "learningsteps-config"
+    namespace = kubernetes_namespace.app.metadata[0].name
+  }
+
+  data = {
+    APP_ENV      = "production"
+    DB_USER      = "fastapiuser"
+    DB_NAME      = "fastapidb"
+    DB_PORT      = "5432"
+    METRICS_PORT = "8001"
+    # Note: DB_HOST is handled directly in the deployment env block below
+  }
 }
 
 resource "kubernetes_deployment" "api" {
@@ -258,9 +275,35 @@ resource "kubernetes_deployment" "api" {
           name  = "api"
           image = "learningstepsregistry20260126.azurecr.io/learningsteps-api:v1"
           port { container_port = 8000 }
+          # 1. MOUNT THE SECRETS FOLDER
+          volume_mount {
+            name       = "secrets-store-inline"
+            mount_path = "/mnt/secrets-store"
+            read_only  = true
+          }
+
           env {
             name  = "DB_HOST"
             value = azurerm_postgresql_flexible_server.db.fqdn
+          }
+
+          # 2. PULL OTHER CONFIG FROM CONFIGMAP
+          env_from {
+            config_map_ref {
+              name = kubernetes_config_map.learningsteps_config.metadata[0].name
+            }
+          }
+        }
+
+        # 3. DEFINE THE CSI VOLUME SOURCE
+        volume {
+          name = "secrets-store-inline"
+          csi {
+            driver    = "secrets-store.csi.k8s.io"
+            read_only = true
+            volume_attributes = {
+              secretProviderClass = "azure-keyvault"
+            }
           }
         }
       }
