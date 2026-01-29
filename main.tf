@@ -5,7 +5,6 @@ terraform {
       source  = "hashicorp/azurerm"
       version = "~> 3.0"
     }
-
     kubernetes = {
       source  = "hashicorp/kubernetes"
       version = "~> 2.0"
@@ -17,24 +16,13 @@ provider "azurerm" {
   features {}
 }
 
-# data "azurerm_kubernetes_cluster" "aks" {
-#  name                = azurerm_kubernetes_cluster.aks.name
-#  resource_group_name = azurerm_kubernetes_cluster.aks.resource_group_name
-# }
-
 provider "kubernetes" {
-  host = azurerm_kubernetes_cluster.aks.kube_config.0.host
-  # host                   = "learningstepsaks-y5q6kq2n.hcp.northeurope.azmk8s.io"
-  # host                   = "https://${data.azurerm_kubernetes_cluster.aks.fqdn}"
-  # host                   = data.azurerm_kubernetes_cluster.aks.kube_config.0.host 
-  # host                   = azurerm_kubernetes_cluster.aks.kube_config[0].host
+  host                   = azurerm_kubernetes_cluster.aks.kube_config.0.host
   client_certificate     = base64decode(azurerm_kubernetes_cluster.aks.kube_config.0.client_certificate)
   client_key             = base64decode(azurerm_kubernetes_cluster.aks.kube_config.0.client_key)
   cluster_ca_certificate = base64decode(azurerm_kubernetes_cluster.aks.kube_config.0.cluster_ca_certificate)
-
 }
 
-# Fetches your current Azure login details (Tenant, Subscription, etc.)
 data "azurerm_client_config" "current" {}
 
 # 2. SHARED INFRASTRUCTURE
@@ -50,7 +38,7 @@ resource "azurerm_virtual_network" "vnet" {
   resource_group_name = azurerm_resource_group.aks_rg.name
 }
 
-# 3. NETWORKING (Subnets)
+# 3. NETWORKING
 resource "azurerm_subnet" "aks_subnet" {
   name                 = "aks-subnet"
   resource_group_name  = azurerm_resource_group.aks_rg.name
@@ -73,12 +61,60 @@ resource "azurerm_subnet" "db_subnet" {
   }
 }
 
-# NSG FIX (CKV2_AZURE_31)
 resource "azurerm_network_security_group" "aks_nsg" {
   name                = "aks-nsg"
   location            = azurerm_resource_group.aks_rg.location
   resource_group_name = azurerm_resource_group.aks_rg.name
 }
+
+resource "azurerm_network_security_rule" "allow_azure_health_probe" {
+  name                   = "AllowAzureHealthProbe"
+  priority               = 100 # Highest priority
+  direction              = "Inbound"
+  access                 = "Allow"
+  protocol               = "Tcp"
+  source_port_range      = "*"
+  destination_port_range = "*"
+  # This is the magic Azure Infrastructure IP
+  source_address_prefix       = "168.63.129.16"
+  destination_address_prefix  = "*"
+  resource_group_name         = azurerm_resource_group.aks_rg.name
+  network_security_group_name = azurerm_network_security_group.aks_nsg.name
+}
+
+# --- PORT 80 FIX START ---
+resource "azurerm_network_security_rule" "allow_http" {
+  name                        = "AllowHTTPInbound"
+  priority                    = 110
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "80"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = azurerm_resource_group.aks_rg.name
+  network_security_group_name = azurerm_network_security_group.aks_nsg.name
+}
+# --- PORT 80 FIX END ---
+
+# ... after the allow_http rule ...
+
+resource "azurerm_network_security_rule" "allow_lb" {
+  name                        = "AllowAzureLoadBalancerInbound"
+  priority                    = 120
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "*"
+  source_address_prefix       = "AzureLoadBalancer"
+  destination_address_prefix  = "*"
+  resource_group_name         = azurerm_resource_group.aks_rg.name
+  network_security_group_name = azurerm_network_security_group.aks_nsg.name
+}
+
+
 
 resource "azurerm_subnet_network_security_group_association" "aks" {
   subnet_id                 = azurerm_subnet.aks_subnet.id
@@ -90,6 +126,12 @@ resource "azurerm_subnet_network_security_group_association" "db" {
   network_security_group_id = azurerm_network_security_group.aks_nsg.id
 }
 
+resource "azurerm_user_assigned_identity" "kv_identity" {
+  name                = "kv-identity"
+  resource_group_name = azurerm_resource_group.aks_rg.name
+  location            = azurerm_resource_group.aks_rg.location
+}
+
 # 4. COMPUTE (AKS Cluster)
 resource "azurerm_kubernetes_cluster" "aks" {
   name                = "learningsteps-aks"
@@ -97,38 +139,22 @@ resource "azurerm_kubernetes_cluster" "aks" {
   resource_group_name = azurerm_resource_group.aks_rg.name
   dns_prefix          = "learningstepsaks"
 
-  # sku_tier = "Standard" # CKV_AZURE_170
-
-  # private_cluster_enabled = false # CKV_AZURE_115
-
-  # local_account_disabled = true # CKV_AZURE_141
-
-  # api_server_authorized_ip_ranges = ["79.214.9.64/32"] # CKV_AZURE_6
-
-  # automatic_channel_upgrade = "stable" # CKV_AZURE_171
-
-  # azure_policy_enabled = true # CKV_AZURE_116
-
   default_node_pool {
     name                         = "system"
     node_count                   = 1
     vm_size                      = "Standard_D4s_v3"
     vnet_subnet_id               = azurerm_subnet.aks_subnet.id
-    only_critical_addons_enabled = true      # CKV_AZURE_232
-    max_pods                     = 40        # CKV_AZURE_168
-    os_disk_type                 = "Managed" # CKV_AZURE_226
+    only_critical_addons_enabled = false
+    max_pods                     = 40
+    os_disk_type                 = "Managed"
+    temporary_name_for_rotation  = "tempnodepool"
   }
 
   network_profile {
     network_plugin = "azure"
-    # network_policy = "azure"         # CKV_AZURE_7
-    service_cidr   = "10.100.0.0/16" # Non-overlapping range
-    dns_service_ip = "10.100.0.10"   # Must be within the service_cidr range
+    service_cidr   = "10.100.0.0/16"
+    dns_service_ip = "10.100.0.10"
   }
-
-  # oms_agent {
-  #   log_analytics_workspace_id = azurerm_log_analytics_workspace.law.id
-  # } # CKV_AZURE_4
 
   identity {
     type = "SystemAssigned"
@@ -137,165 +163,48 @@ resource "azurerm_kubernetes_cluster" "aks" {
   key_vault_secrets_provider {
     secret_rotation_enabled = true
   }
-
-  # disk_encryption_set_id = azurerm_disk_encryption_set.aks.id # CKV_AZURE_117
-
-  # confidential_computing {
-  #   sgx_quote_helper_enabled = true
-  # } # CKV_AZURE_227
-
 }
 
-# Log Analytics
+# 5. SECURITY & MONITORING
 resource "azurerm_log_analytics_workspace" "law" {
   name                = "aks-law"
   location            = azurerm_resource_group.aks_rg.location
   resource_group_name = azurerm_resource_group.aks_rg.name
   sku                 = "PerGB2018"
-  retention_in_days   = 30
 }
 
-# Disk Encryption Set
-# resource "azurerm_disk_encryption_set" "aks" {
-#  name                = "aks-des"
-#  location            = azurerm_resource_group.aks_rg.location
-#  resource_group_name = azurerm_resource_group.aks_rg.name
-#  key_vault_key_id    = azurerm_key_vault_key.des.id
-
-#  identity {
-#    type = "SystemAssigned"
-#  }
-# }
-
-# 5. SECURITY (Key Vault & Permissions)
-# Key Vault
 resource "azurerm_key_vault" "kv" {
-  name                = "kv-learningsteps-1769" # Must be globally unique
-  location            = azurerm_resource_group.aks_rg.location
-  resource_group_name = azurerm_resource_group.aks_rg.name
-  tenant_id           = data.azurerm_client_config.current.tenant_id
-  sku_name            = "standard"
-
+  name                     = "kv-learningsteps-1769"
+  location                 = azurerm_resource_group.aks_rg.location
+  resource_group_name      = azurerm_resource_group.aks_rg.name
+  tenant_id                = data.azurerm_client_config.current.tenant_id
+  sku_name                 = "standard"
+  purge_protection_enabled = true
   soft_delete_retention_days = 7
-  purge_protection_enabled   = true # CKV_AZURE_110, 42
-
-  public_network_access_enabled = true # CKV_AZURE_189
-
-  network_acls {
-    default_action = "Allow"
-    bypass         = "AzureServices"
-  } # CKV_AZURE_109
 }
 
-# Personal Access Policy - Allows YOU (the person running Terraform) to add secrets
 resource "azurerm_key_vault_access_policy" "user_policy" {
-  key_vault_id = azurerm_key_vault.kv.id
-  tenant_id    = data.azurerm_client_config.current.tenant_id
-  object_id    = data.azurerm_client_config.current.object_id
-
-  key_permissions = [
-    "Get", "List", "Create", "Delete", "Update", "Purge", "Recover", "GetRotationPolicy", "Rotate"
-  ]
-  secret_permissions = ["Get", "List", "Set", "Delete", "Purge"]
+  key_vault_id       = azurerm_key_vault.kv.id
+  tenant_id          = data.azurerm_client_config.current.tenant_id
+  object_id          = data.azurerm_client_config.current.object_id
+  key_permissions    = ["Get", "List", "Create", "Delete", "Update"]
+  secret_permissions = ["Get", "List", "Set", "Delete"]
 }
 
-# The AKS Kubelet Access Policy
 resource "azurerm_key_vault_access_policy" "aks_policy" {
-  key_vault_id = azurerm_key_vault.kv.id
-  tenant_id    = data.azurerm_client_config.current.tenant_id
-  object_id    = azurerm_kubernetes_cluster.aks.kubelet_identity[0].object_id
-
-  key_permissions = [
-    "Get", "List", "Create", "Delete", "Update", "GetRotationPolicy"
-  ]
+  key_vault_id       = azurerm_key_vault.kv.id
+  tenant_id          = data.azurerm_client_config.current.tenant_id
+  object_id          = azurerm_kubernetes_cluster.aks.kubelet_identity[0].object_id
   secret_permissions = ["Get", "List"]
-}
-
-resource "azurerm_key_vault_access_policy" "tf_secret_policy" {
-  key_vault_id = azurerm_key_vault.kv.id
-  tenant_id    = data.azurerm_client_config.current.tenant_id
-  object_id    = "b00cd8fb-3be9-4c4b-ae15-35c22d7bccab" # your Terraform identity
-
-  secret_permissions = [
-    "Get",
-    "List",
-    "Set",
-    "Delete",
-    "Purge"
-  ]
-
-  key_permissions = [
-    "Get",
-    "List"
-  ]
-}
-
-# Key Value Key
-# resource "azurerm_key_vault_key" "des" {
-#  name         = "aks-disk-encryption-key"
-#  key_vault_id = azurerm_key_vault.kv.id
-#  key_type     = "RSA"
-#  key_size     = 2048
-#
-#  key_opts = [
-#    "decrypt",
-#    "encrypt",
-#    "sign",
-#    "unwrapKey",
-#    "wrapKey",
-#    "verify"
-#  ]
-
-# This is crucial!
-#  depends_on = [
-#    azurerm_key_vault_access_policy.user_policy
-#  azurerm_key_vault_access_policy.aks_policy,
-#  azurerm_key_vault_access_policy.allow_rotation_policy,
-#  azurerm_private_endpoint.kv
-#  ]
-# }
-
-# Private Endpoint
-resource "azurerm_private_endpoint" "kv" {
-  name                = "kv-pe"
-  location            = azurerm_resource_group.aks_rg.location
-  resource_group_name = azurerm_resource_group.aks_rg.name
-  subnet_id           = azurerm_subnet.aks_subnet.id
-
-  private_service_connection {
-    name                           = "kv-psc"
-    private_connection_resource_id = azurerm_key_vault.kv.id
-    subresource_names              = ["vault"]
-    is_manual_connection           = false
-  }
-}
-
-resource "azurerm_key_vault_access_policy" "allow_rotation_policy" {
-  key_vault_id = azurerm_key_vault.kv.id
-  tenant_id    = data.azurerm_client_config.current.tenant_id
-  # object_id    = azurerm_kubernetes_cluster.aks.kubelet_identity[0].object_id
-  object_id = "b00cd8fb-3be9-4c4b-ae15-35c22d7bccab"
-
-  key_permissions = [
-    "Get", "List", "GetRotationPolicy"
-  ]
-}
-
-resource "random_password" "db_pass" {
-  length  = 20
-  special = true
 }
 
 resource "azurerm_key_vault_secret" "db_password" {
   name         = "pg-admin-password"
-  value        = random_password.db_pass.result
+  value        = "P@ssw0rd123!" # Using a placeholder for clarity
   key_vault_id = azurerm_key_vault.kv.id
-
-  content_type    = "postgres-admin-password" # CKV_AZURE_114
-  expiration_date = "2027-01-01T00:00:00Z"    # CKV_AZURE_41  
 }
 
-# 6. DATABASE NETWORKING (Private DNS)
+# 6. DATABASE
 resource "azurerm_private_dns_zone" "dns" {
   name                = "learningsteps.postgres.database.azure.com"
   resource_group_name = azurerm_resource_group.aks_rg.name
@@ -308,221 +217,50 @@ resource "azurerm_private_dns_zone_virtual_network_link" "dns_link" {
   resource_group_name   = azurerm_resource_group.aks_rg.name
 }
 
-# 7. DATA (PostgreSQL Flexible Server)
 resource "azurerm_postgresql_flexible_server" "db" {
-  name                = "learningsteps-db-server"
-  resource_group_name = azurerm_resource_group.aks_rg.name
-  location            = azurerm_resource_group.aks_rg.location
-  zone                = "1"
-  version             = "13"
-  delegated_subnet_id = azurerm_subnet.db_subnet.id
-  private_dns_zone_id = azurerm_private_dns_zone.dns.id
-
+  name                   = "learningsteps-db-server"
+  zone                   = 1
+  resource_group_name    = azurerm_resource_group.aks_rg.name
+  location               = azurerm_resource_group.aks_rg.location
+  version                = "13"
+  public_network_access_enabled = false
+  delegated_subnet_id    = azurerm_subnet.db_subnet.id
+  private_dns_zone_id    = azurerm_private_dns_zone.dns.id
   administrator_login    = "psqladmin"
   administrator_password = azurerm_key_vault_secret.db_password.value
-
-  storage_mb                   = 32768
-  sku_name                     = "GP_Standard_D2ds_v4"
-  geo_redundant_backup_enabled = true # CKV_AZURE_136
-
-  public_network_access_enabled = false
-
-  # Ensure DNS link is ready BEFORE creating the DB
-  depends_on = [azurerm_private_dns_zone_virtual_network_link.dns_link]
+  sku_name               = "GP_Standard_D2ds_v4"
+  
+  depends_on             = [azurerm_private_dns_zone_virtual_network_link.dns_link]
 }
 
-# 8. Create the database in the Flexible Server
 resource "azurerm_postgresql_flexible_server_database" "app_db" {
   name      = "fastapidb"
   server_id = azurerm_postgresql_flexible_server.db.id
-  charset   = "UTF8"
-  # Optional: collation
-  # collation = "English_United States.1252"
-
-  depends_on = [
-    azurerm_postgresql_flexible_server.db
-  ]
 }
 
+# 7. KUBERNETES APP
 resource "kubernetes_namespace" "app" {
-  metadata {
-    name = "app"
-  }
+  metadata { name = "app" }
 }
 
-# 9. Kubernetes Deployment
 resource "kubernetes_deployment" "api" {
-  depends_on = [kubernetes_namespace.app]
   metadata {
     name      = "learningsteps-api"
-    namespace = kubernetes_namespace.app.metadata[0].name
+    namespace = "app"
   }
   spec {
     replicas = 2
-    selector {
-      match_labels = {
-        app = "learningsteps"
-      }
-    }
+    selector { match_labels = { app = "learningsteps" } }
     template {
-      metadata {
-        labels = {
-          app = "learningsteps"
-        }
-      }
+      metadata { labels = { app = "learningsteps" } }
       spec {
-        security_context {
-          run_as_non_root = true
-          run_as_user     = 1000 # Standard non-root UID
-          fs_group        = 1000
-        }
-
-        # INIT Container: ensure the app user exists
-        init_container {
-          name  = "init-db-user"
-          image = "postgres:13"
-
-          # This command runs the script mounted from the ConfigMap
-          command = ["/bin/bash", "-c"]
-          args = [
-            <<-EOT
-            PGPASSWORD=$$DB_PASSWORD psql -h $$DB_HOST -U $$DB_USER -d $$DB_NAME <<'SQL'
-            DO $$
-            BEGIN
-              IF NOT EXISTS (
-                SELECT FROM pg_catalog.pg_roles WHERE rolname = 'fastapiuser'
-              ) THEN
-                CREATE USER fastapiuser WITH PASSWORD 'pass123';
-              END IF;
-
-              GRANT ALL PRIVILEGES ON DATABASE fastapidb TO fastapiuser;
-              GRANT USAGE ON SCHEMA public TO fastapiuser;
-              GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO fastapiuser;
-              GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO fastapiuser;
-            END
-            $$;
-            SQL
-
-            PGPASSWORD=$$DB_PASSWORD psql -h $$DB_HOST -U $$DB_USER -d $$DB_NAME -f /scripts/init.sql
-            EOT
-          ]
-
-          env {
-            name  = "DB_HOST"
-            value = azurerm_postgresql_flexible_server.db.fqdn
-          }
-          env {
-            name  = "DB_USER"
-            value = "psqladmin"
-          }
-          env {
-            name  = "DB_NAME"
-            value = "fastapidb"
-          }
-          env {
-            name  = "DB_PASSWORD"
-            value = azurerm_key_vault_secret.db_password.value
-          }
-
-          volume_mount {
-            name       = "db-init-volume"
-            mount_path = "/scripts"
-          }
-        }
-
-        # MAIN FastAPI Container
         container {
           name  = "api"
           image = "learningstepsregistry20260126.azurecr.io/learningsteps-api:v1"
-
-          # resources {
-          #   requests = {
-          #    cpu    = "100m"
-          #    memory = "128Mi"
-          #  }
-          #  limits = {
-          #    cpu    = "500m"
-          #    memory = "256Mi"
-          #  }
-          # }
-
-          # liveness_probe {
-          #  http_get {
-          #    path = "/health"
-          #    port = 8000
-          #  }
-          #  initial_delay_seconds = 5
-          # }
-
-          # readiness_probe {
-          #  http_get {
-          #    path = "/health"
-          #    port = 8000
-          #  }
-          #  initial_delay_seconds = 5
-          # }
-
-          # security_context {
-          #  allow_privilege_escalation = false
-          #  capabilities {
-          #    drop = ["NET_RAW"]
-          #  }
-          # }
-
-          # env {
-          #  name  = "PYTHONUNBUFFERED"
-          #  value = "1"
-          # }
-
+          port { container_port = 8000 }
           env {
             name  = "DB_HOST"
             value = azurerm_postgresql_flexible_server.db.fqdn
-          }
-          env {
-            name  = "DB_USER"
-            value = "psqladmin" # Flexible server doesn't use the @server suffix!
-          }
-          env {
-            name  = "DB_NAME"
-            value = "fastapidb" # Fixed mismatch (was 'postgres')
-          }
-
-          port {
-            container_port = 8000
-            name           = "http"
-          }
-
-          port {
-            container_port = 8001
-            name           = "metrics"
-          }
-
-          volume_mount {
-            name       = "secrets-store-inline"
-            mount_path = "/mnt/secrets-store"
-            read_only  = true
-          }
-        }
-
-        # Volume for the SQL Script ConfigMap
-        volume {
-          name = "db-init-volume"
-          config_map {
-            name = kubernetes_config_map.db_init_script.metadata[0].name
-          }
-        }
-
-        # Volumne for Key Vault Secrets
-        volume {
-          name = "secrets-store-inline"
-          csi {
-            driver    = "secrets-store.csi.k8s.io"
-            read_only = true
-            volume_attributes = {
-              # "secretProviderClass" = "azure-kv-secrets"
-              # checkov:skip=CKV_SECRET_6 -- Not a secret, this is a SecretProviderClass name
-              "secretProviderClass" = "azure-keyvault"
-            }
           }
         }
       }
@@ -530,51 +268,23 @@ resource "kubernetes_deployment" "api" {
   }
 }
 
-# 11 DB Init Script
-resource "kubernetes_config_map" "db_init_script" {
-  metadata {
-    name      = "db-init-script"
-    namespace = kubernetes_namespace.app.metadata[0].name
-  }
-
-  data = {
-    "init.sql" = <<EOF
-      # -- We use $do$ to avoid the $$ parsing error in Checkov
-      # DO $do$ 
-      # BEGIN 
-      #  IF NOT EXISTS (SELECT FROM pg_catalog.pg_roles WHERE rolname = 'fastapiuser') THEN
-      #    CREATE USER fastapiuser WITH PASSWORD 'pass123';
-      #  END IF;
-      # END $do$;
-      
-      # GRANT ALL PRIVILEGES ON DATABASE fastapidb TO fastapiuser;
-
-      # CREATE TABLE IF NOT EXISTS entries (
-      #    id SERIAL PRIMARY KEY,
-      #    title TEXT NOT NULL,
-      #    content TEXT,
-      #    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-      # );
-    # EOF
-    
-    CREATE TABLE IF NOT EXISTS entries (
-          id SERIAL PRIMARY KEY,
-          title TEXT NOT NULL,
-          content TEXT,
-          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-      );
-    EOF
+resource "kubernetes_manifest" "azure_keyvault" {
+  manifest = {
+    apiVersion = "secrets-store.csi.x-k8s.io/v1"
+    kind       = "SecretProviderClass"
+    metadata = {
+      name      = "azure-keyvault"
+      namespace = "app"
+    }
+    spec = {
+      provider = "azure"
+      parameters = {
+        useVMManagedIdentity   = "true"
+        userAssignedIdentityID = azurerm_kubernetes_cluster.aks.kubelet_identity[0].client_id
+        keyvaultName           = azurerm_key_vault.kv.name
+        tenantId               = data.azurerm_client_config.current.tenant_id
+        objects                = "array:\n  - |\n    objectName: pg-admin-password\n    objectType: secret\n"
+      }
+    }
   }
 }
-
-# Raw kubeconfig YAML as string
-# output "kube_config_raw" {
-#  value     = azurerm_kubernetes_cluster.aks.kube_config_raw
-#  sensitive = true
-# }
-
-# Detailed fields (host, certs, etc.)
-# output "kube_config" {
-#  value     = azurerm_kubernetes_cluster.aks.kube_config[0]
-#  sensitive = true
-# }

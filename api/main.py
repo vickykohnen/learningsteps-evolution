@@ -24,6 +24,10 @@ app = FastAPI(
     description="A simple learning journal API for tracking daily work, struggles, and intentions"
 )
 
+@app.get("/")
+async def root():
+    return {"status": "ok", "message": "LearningSteps API is running"}
+
 # 3. Middleware (Must come before routers)
 @app.middleware("http")
 async def monitor_requests(request: Request, call_next):
