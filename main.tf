@@ -262,11 +262,11 @@ resource "kubernetes_config_map" "learningsteps_config" {
   }
 
   data = {
-    APP_ENV      = "production"
-    DB_USER      = "fastapiuser"
-    DB_NAME      = "fastapidb"
-    DB_PORT      = "5432"
-    METRICS_PORT = "8001"
+    APP_ENV = "production"
+    DB_USER = "fastapiuser"
+    DB_NAME = "fastapidb"
+    DB_PORT = "5432"
+    # METRICS_PORT = "8001"
     # Note: DB_HOST is handled directly in the deployment env block below
   }
 }
@@ -286,14 +286,15 @@ resource "kubernetes_deployment" "api" {
         # This is for Grafana/Prometheus
         annotations = {
           "prometheus.io/scrape" = "true"
-          "prometheus.io/port"   = "8001"
+          "prometheus.io/port"   = "8000"
           "prometheus.io/path"   = "/metrics"
         }
       }
       spec {
         container {
-          name  = "api"
-          image = "learningstepsregistry20260126.azurecr.io/learningsteps-api:v1"
+          name              = "api"
+          image             = "learningstepsregistry20260126.azurecr.io/learningsteps-api:v1"
+          image_pull_policy = "Always"
           port { container_port = 8000 }
           # 1. MOUNT THE SECRETS FOLDER
           volume_mount {

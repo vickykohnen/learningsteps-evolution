@@ -10,7 +10,8 @@ from dotenv import load_dotenv
 from routers.journal_router import router as journal_router
 
 # Prometheus
-from prometheus_client import make_asgi_app, Counter, Histogram
+from prometheus_client import Counter, Histogram
+from prometheus_fastapi_instrumentator import Instrumentator
 
 load_dotenv()
 
@@ -34,6 +35,9 @@ app = FastAPI(
     title="LearningSteps API", 
     description="A simple learning journal API for tracking daily work, struggles, and intentions"
 )
+
+# This is the line that actually creates the /metrics endpoint
+Instrumentator().instrument(app).expose(app)
 
 @app.get("/")
 async def root():
@@ -61,8 +65,8 @@ async def prometheus_middleware(request: Request, call_next):
     return response
 
 # Mount the Prometheus metrics endpoint at /metrics
-metrics_app = make_asgi_app()
-app.mount("/metrics", metrics_app)
+# metrics_app = make_asgi_app()
+# app.mount("/metrics", metrics_app)
 
 # 4. Exception Handlers
 @app.exception_handler(RequestValidationError)

@@ -1,0 +1,20 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: ama-metrics-settings-configmap
+  namespace: kube-system
+data:
+  schema-version: v1
+  config-version: ver3
+  prometheus-config-override: |-
+    scrape_configs:
+      - job_name: 'learningsteps-manual'
+        static_configs:
+          - targets: ['api-service.app.svc.cluster.local:8000']
+  default-scrape-settings-enabled: |-
+    kubelet = true
+    coredns = true
+    cadvisor = true
+    kubeproxy = true
+    kubestate = true
+    nodeexporter = true

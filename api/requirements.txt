@@ -5,3 +5,5 @@ aiohttp
 sqlalchemy
 psycopg2-binary
 asyncpg
+prometheus-client
+prometheus-fastapi-instrumentator
