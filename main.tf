@@ -17,7 +17,22 @@ provider "azurerm" {
   features {}
 }
 
+# data "azurerm_kubernetes_cluster" "aks" {
+#  name                = azurerm_kubernetes_cluster.aks.name
+#  resource_group_name = azurerm_kubernetes_cluster.aks.resource_group_name
+# }
 
+provider "kubernetes" {
+  host = azurerm_kubernetes_cluster.aks.kube_config.0.host
+  # host                   = "learningstepsaks-y5q6kq2n.hcp.northeurope.azmk8s.io"
+  # host                   = "https://${data.azurerm_kubernetes_cluster.aks.fqdn}"
+  # host                   = data.azurerm_kubernetes_cluster.aks.kube_config.0.host 
+  # host                   = azurerm_kubernetes_cluster.aks.kube_config[0].host
+  client_certificate     = base64decode(azurerm_kubernetes_cluster.aks.kube_config.0.client_certificate)
+  client_key             = base64decode(azurerm_kubernetes_cluster.aks.kube_config.0.client_key)
+  cluster_ca_certificate = base64decode(azurerm_kubernetes_cluster.aks.kube_config.0.cluster_ca_certificate)
+
+}
 
 # Fetches your current Azure login details (Tenant, Subscription, etc.)
 data "azurerm_client_config" "current" {}
@@ -82,17 +97,17 @@ resource "azurerm_kubernetes_cluster" "aks" {
   resource_group_name = azurerm_resource_group.aks_rg.name
   dns_prefix          = "learningstepsaks"
 
-  sku_tier = "Standard" # CKV_AZURE_170
+  # sku_tier = "Standard" # CKV_AZURE_170
 
-  private_cluster_enabled = false # CKV_AZURE_115
+  # private_cluster_enabled = false # CKV_AZURE_115
 
   # local_account_disabled = true # CKV_AZURE_141
 
-  api_server_authorized_ip_ranges = ["79.214.9.64/32"] # CKV_AZURE_6
+  # api_server_authorized_ip_ranges = ["79.214.9.64/32"] # CKV_AZURE_6
 
-  automatic_channel_upgrade = "stable" # CKV_AZURE_171
+  # automatic_channel_upgrade = "stable" # CKV_AZURE_171
 
-  azure_policy_enabled = true # CKV_AZURE_116
+  # azure_policy_enabled = true # CKV_AZURE_116
 
   default_node_pool {
     name                         = "system"
@@ -106,14 +121,14 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
   network_profile {
     network_plugin = "azure"
-    network_policy = "azure"         # CKV_AZURE_7
+    # network_policy = "azure"         # CKV_AZURE_7
     service_cidr   = "10.100.0.0/16" # Non-overlapping range
     dns_service_ip = "10.100.0.10"   # Must be within the service_cidr range
   }
 
-  oms_agent {
-    log_analytics_workspace_id = azurerm_log_analytics_workspace.law.id
-  } # CKV_AZURE_4
+  # oms_agent {
+  #   log_analytics_workspace_id = azurerm_log_analytics_workspace.law.id
+  # } # CKV_AZURE_4
 
   identity {
     type = "SystemAssigned"
@@ -125,9 +140,9 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
   # disk_encryption_set_id = azurerm_disk_encryption_set.aks.id # CKV_AZURE_117
 
-  confidential_computing {
-    sgx_quote_helper_enabled = true
-  } # CKV_AZURE_227
+  # confidential_computing {
+  #   sgx_quote_helper_enabled = true
+  # } # CKV_AZURE_227
 
 }
 
@@ -343,7 +358,7 @@ resource "kubernetes_deployment" "api" {
     namespace = kubernetes_namespace.app.metadata[0].name
   }
   spec {
-    replicas = 1
+    replicas = 2
     selector {
       match_labels = {
         app = "learningsteps"
@@ -420,44 +435,44 @@ resource "kubernetes_deployment" "api" {
           name  = "api"
           image = "learningstepsregistry20260126.azurecr.io/learningsteps-api:v1"
 
-          resources {
-            requests = {
-              cpu    = "100m"
-              memory = "128Mi"
-            }
-            limits = {
-              cpu    = "500m"
-              memory = "256Mi"
-            }
-          }
+          # resources {
+          #   requests = {
+          #    cpu    = "100m"
+          #    memory = "128Mi"
+          #  }
+          #  limits = {
+          #    cpu    = "500m"
+          #    memory = "256Mi"
+          #  }
+          # }
 
-          liveness_probe {
-            http_get {
-              path = "/health"
-              port = 8000
-            }
-            initial_delay_seconds = 5
-          }
+          # liveness_probe {
+          #  http_get {
+          #    path = "/health"
+          #    port = 8000
+          #  }
+          #  initial_delay_seconds = 5
+          # }
 
-          readiness_probe {
-            http_get {
-              path = "/health"
-              port = 8000
-            }
-            initial_delay_seconds = 5
-          }
+          # readiness_probe {
+          #  http_get {
+          #    path = "/health"
+          #    port = 8000
+          #  }
+          #  initial_delay_seconds = 5
+          # }
 
-          security_context {
-            allow_privilege_escalation = false
-            capabilities {
-              drop = ["NET_RAW"]
-            }
-          }
+          # security_context {
+          #  allow_privilege_escalation = false
+          #  capabilities {
+          #    drop = ["NET_RAW"]
+          #  }
+          # }
 
-          env {
-            name  = "PYTHONUNBUFFERED"
-            value = "1"
-          }
+          # env {
+          #  name  = "PYTHONUNBUFFERED"
+          #  value = "1"
+          # }
 
           env {
             name  = "DB_HOST"
@@ -470,7 +485,6 @@ resource "kubernetes_deployment" "api" {
           env {
             name  = "DB_NAME"
             value = "fastapidb" # Fixed mismatch (was 'postgres')
-            # value = "postgres"
           }
 
           port {
@@ -525,17 +539,25 @@ resource "kubernetes_config_map" "db_init_script" {
 
   data = {
     "init.sql" = <<EOF
-      -- We use $do$ to avoid the $$ parsing error in Checkov
-      DO $do$ 
-      BEGIN 
-        IF NOT EXISTS (SELECT FROM pg_catalog.pg_roles WHERE rolname = 'fastapiuser') THEN
-          CREATE USER fastapiuser WITH PASSWORD 'pass123';
-        END IF;
-      END $do$;
+      # -- We use $do$ to avoid the $$ parsing error in Checkov
+      # DO $do$ 
+      # BEGIN 
+      #  IF NOT EXISTS (SELECT FROM pg_catalog.pg_roles WHERE rolname = 'fastapiuser') THEN
+      #    CREATE USER fastapiuser WITH PASSWORD 'pass123';
+      #  END IF;
+      # END $do$;
       
-      GRANT ALL PRIVILEGES ON DATABASE fastapidb TO fastapiuser;
+      # GRANT ALL PRIVILEGES ON DATABASE fastapidb TO fastapiuser;
 
-      CREATE TABLE IF NOT EXISTS entries (
+      # CREATE TABLE IF NOT EXISTS entries (
+      #    id SERIAL PRIMARY KEY,
+      #    title TEXT NOT NULL,
+      #    content TEXT,
+      #    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      # );
+    # EOF
+    
+    CREATE TABLE IF NOT EXISTS entries (
           id SERIAL PRIMARY KEY,
           title TEXT NOT NULL,
           content TEXT,
@@ -546,30 +568,13 @@ resource "kubernetes_config_map" "db_init_script" {
 }
 
 # Raw kubeconfig YAML as string
-output "kube_config_raw" {
-  value     = azurerm_kubernetes_cluster.aks.kube_config_raw
-  sensitive = true
-}
+# output "kube_config_raw" {
+#  value     = azurerm_kubernetes_cluster.aks.kube_config_raw
+#  sensitive = true
+# }
 
 # Detailed fields (host, certs, etc.)
-output "kube_config" {
-  value     = azurerm_kubernetes_cluster.aks.kube_config[0]
-  sensitive = true
-}
-
-data "azurerm_kubernetes_cluster" "aks" {
-  name                = azurerm_kubernetes_cluster.aks.name
-  resource_group_name = azurerm_kubernetes_cluster.aks.resource_group_name
-}
-
-provider "kubernetes" {
-  # host                   = azurerm_kubernetes_cluster.aks.kube_config.0.host
-  # host                   = "learningstepsaks-y5q6kq2n.hcp.northeurope.azmk8s.io"
-  # host                   = "https://${data.azurerm_kubernetes_cluster.aks.fqdn}"
-  # host                   = data.azurerm_kubernetes_cluster.aks.kube_config.0.host 
-  host                   = azurerm_kubernetes_cluster.aks.kube_config[0].host
-  client_certificate     = base64decode(azurerm_kubernetes_cluster.aks.kube_config.0.client_certificate)
-  client_key             = base64decode(azurerm_kubernetes_cluster.aks.kube_config.0.client_key)
-  cluster_ca_certificate = base64decode(azurerm_kubernetes_cluster.aks.kube_config.0.cluster_ca_certificate)
-
-}
+# output "kube_config" {
+#  value     = azurerm_kubernetes_cluster.aks.kube_config[0]
+#  sensitive = true
+# }
