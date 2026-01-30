@@ -53,7 +53,7 @@ jobs:
         uses: aquasecurity/trivy-action@master
         with:
           # Pointing to the specific SHA tag we just built locally
-          image-ref: '${{ secrets.ACR_LOGIN_SERVER }}/learningsteps-api:v1-${{ github.sha }}'
+          image-ref: '${{ secrets.ACR_LOGIN_SERVER }}/learningsteps-api:${{ github.sha }}'
           format: 'table'
           exit-code: '1' # Build stops here if vulnerabilities are found
           ignore-unfixed: true
