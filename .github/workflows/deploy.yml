@@ -48,8 +48,7 @@ jobs:
         # tag 1 is floating tag - this the current stable version 1
         # tag 2 (github.sha) is the immutable or unique tag because the github.sha
         # changes with every single commit (tag is a unique fingerprint)
-        run: docker build -t ${{ secrets.ACR_LOGIN_SERVER }}/learningsteps-api:v1 -t ${{ secrets.ACR_LOGIN_SERVER }}/learningsteps-api:v1-${{ github.sha }} .
-
+        run: docker build -t ${{ secrets.ACR_LOGIN_SERVER }}/learningsteps-api:v1 -t ${{ secrets.ACR_LOGIN_SERVER }}/learningsteps-api:latest -t ${{ secrets.ACR_LOGIN_SERVER }}/learningsteps-api:${{ github.sha }} .
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
@@ -77,6 +76,7 @@ jobs:
         run: |
           echo "Pipeline Integrity Verified - Security Scan Passed"
           docker push "${{ secrets.ACR_LOGIN_SERVER }}/learningsteps-api:v1"
+          docker push "${{ secrets.ACR_LOGIN_SERVER }}/learningsteps-api:latest"
           docker push "${{ secrets.ACR_LOGIN_SERVER }}/learningsteps-api:v1-${{ github.sha }}"
     
   deploy-to-aks:
@@ -134,8 +134,8 @@ jobs:
           kubectl apply -f kubernetes/      
           
           # 2. Update the image to the latest version built in the pipeline
-          kubectl set image deployment/learningsteps-api api="${{ secrets.ACR_LOGIN_SERVER }}/learningsteps-api:v1-${{ github.sha }}" -n app
-          
+          kubectl set image deployment/learningsteps-api api="${{ secrets.ACR_LOGIN_SERVER }}/learningsteps-api:${{ github.sha }}" -n app
+
           # 3. Monitor the rollout to ensure it doesn't fail (e.g., ImagePullBackOff)
           kubectl rollout status deployment/learningsteps-api -n app
 
