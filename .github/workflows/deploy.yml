@@ -77,7 +77,7 @@ jobs:
           echo "Pipeline Integrity Verified - Security Scan Passed"
           docker push "${{ secrets.ACR_LOGIN_SERVER }}/learningsteps-api:v1"
           docker push "${{ secrets.ACR_LOGIN_SERVER }}/learningsteps-api:latest"
-          docker push "${{ secrets.ACR_LOGIN_SERVER }}/learningsteps-api:v1-${{ github.sha }}"
+          docker push "${{ secrets.ACR_LOGIN_SERVER }}/learningsteps-api:${{ github.sha }}"
     
   deploy-to-aks:
     needs: verify-integrity
